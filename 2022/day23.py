@@ -1,11 +1,14 @@
 from readFile import *
+from copy import deepcopy
 
 
 def solution(elves):
     time = 0
     solution_part_1 = 0
     changes_made = True
+    preferred_directions = ['N', 'S', 'W', 'E']
     while changes_made:
+        # find answer first part
         if time == 10:
             min_row = 9e9
             max_row = -9e9
@@ -16,71 +19,84 @@ def solution(elves):
                 max_row = max(max_row, items['row'])
                 min_col = min(min_col, items['col'])
                 max_col = max(max_col, items['col'])
-                solution_part_1 = (max_row - min_row + 1) * (max_col - min_col + 1) - len(elves)
-        elf_to_cord, n_elf_to_cord = first_half(elves)
+            solution_part_1 = (max_row - min_row + 1) * (max_col - min_col + 1) - len(elves)
+        # loop through steps
+        elf_to_cord, n_elf_to_cord = first_half(elves, preferred_directions)
         elves, changes_made = second_half(elves, elf_to_cord, n_elf_to_cord)
-        for key, item in elves.items():
-            item['lod'].append(item['lod'].pop(0))
+        # sort by row and reset neighbors in direction
+        list_of_items = list(elves.items())
+        list_of_items = sorted(list_of_items, key=lambda x: x[1]['row'])
+        for i in range(len(list_of_items)):
+            elves[i] = deepcopy(list_of_items[i][1])
+            elves[i]['neighbors in direction'] = {
+                        'N': False,
+                        'S': False,
+                        'W': False,
+                        'E': False
+                    }
+        preferred_directions.append(preferred_directions.pop(0))  # move first item to last
         time += 1
 
     return solution_part_1, time
 
 
-def first_half(elves):
+def first_half(elves, preferred_directions):
+    # preferred new location of elf
     elf_to_cord = dict()
+    # how many elfs to want to move to cord c
     n_elf_to_cord = dict()
-    for current_key, current_item in elves.items():
-        # find which direction is clear
-        no_elf_north = True
-        no_elf_south = True
-        no_elf_west = True
-        no_elf_east = True
-        for key_2, item_2 in elves.items():
-            if current_key != key_2:
-                if item_2['row'] == current_item['row'] - 1 and abs(item_2['col'] - current_item['col']) <= 1:
-                    no_elf_north = False
-                if item_2['row'] == current_item['row'] + 1 and abs(item_2['col'] - current_item['col']) <= 1:
-                    no_elf_south = False
-                if item_2['col'] == current_item['col'] - 1 and abs(item_2['row'] - current_item['row']) <= 1:
-                    no_elf_west = False
-                if item_2['col'] == current_item['col'] + 1 and abs(item_2['row'] - current_item['row']) <= 1:
-                    no_elf_east = False
-            if not(no_elf_north or no_elf_east or no_elf_west or no_elf_south):
+    for i in range(len(elves.keys())):
+        current_elf = elves[i]
+        current_elf_row = current_elf['row']
+        current_elf_col = current_elf['col']
+        for j in range(i + 1, len(elves.keys())):
+            other_elf = elves[j]
+            # since elfs are sorted by row, if we get to an elf who is at least 2 rows lower, we can break
+            if current_elf_row + 2 <= other_elf['row']:
                 break
+            # other elf north of current elf
+            if other_elf['row'] == current_elf_row - 1 and abs(other_elf['col'] - current_elf_col) <= 1:
+                current_elf['neighbors in direction']['N'] = True
+                other_elf['neighbors in direction']['S'] = True
+            # other elf south of current elf
+            if other_elf['row'] == current_elf_row + 1 and abs(other_elf['col'] - current_elf_col) <= 1:
+                current_elf['neighbors in direction']['S'] = True
+                other_elf['neighbors in direction']['N'] = True
+            # other elf east of current elf
+            if other_elf['col'] == current_elf_col + 1 and abs(other_elf['row'] - current_elf_row) <= 1:
+                current_elf['neighbors in direction']['E'] = True
+                other_elf['neighbors in direction']['W'] = True
+            # other elf west of current elf
+            if other_elf['col'] == current_elf_col - 1 and abs(other_elf['row'] - current_elf_row) <= 1:
+                current_elf['neighbors in direction']['W'] = True
+                other_elf['neighbors in direction']['E'] = True
+            # if there is an elf in all 4 directions, we can break
 
         # find preferred direction
-        direction = None
-        if not (no_elf_north and no_elf_east and no_elf_west and no_elf_south):
-            for d in current_item['lod']:
-                if d == 'N' and no_elf_north:
-                    direction = 'N'
-                    break
-                elif d == 'S' and no_elf_south:
-                    direction = 'S'
-                    break
-                elif d == 'W' and no_elf_west:
-                    direction = 'W'
-                    break
-                elif d == 'E' and no_elf_east:
-                    direction = 'E'
-                    break
+        counter = 0
+        for d in current_elf['neighbors in direction']:
+            if current_elf['neighbors in direction'][d]:
+                counter += 1
+        if 0 < counter < 4:
+            for direction in preferred_directions:
+                new_cord = None
+                if direction == 'N' and not current_elf['neighbors in direction']['N']:
+                    new_cord = (current_elf_row - 1, current_elf_col)
+                elif direction == 'S' and not current_elf['neighbors in direction']['S']:
+                    new_cord = (current_elf_row + 1, current_elf_col)
+                elif direction == 'E' and not current_elf['neighbors in direction']['E']:
+                    new_cord = (current_elf_row, current_elf_col + 1)
+                elif direction == 'W' and not current_elf['neighbors in direction']['W']:
+                    new_cord = (current_elf_row, current_elf_col - 1)
 
-        # save direction for second half
-        if direction is not None:
-            if direction == 'N':
-                new_cord = (current_item['row'] - 1, current_item['col'])
-            elif direction == 'S':
-                new_cord = (current_item['row'] + 1, current_item['col'])
-            elif direction == 'W':
-                new_cord = (current_item['row'], current_item['col'] - 1)
-            elif direction == 'E':
-                new_cord = (current_item['row'], current_item['col'] + 1)
-            elf_to_cord.update({current_key: new_cord})
-            if new_cord in n_elf_to_cord.keys():
-                n_elf_to_cord[new_cord] += 1
-            else:
-                n_elf_to_cord.update({new_cord: 1})
-
+                if new_cord is not None:
+                    # save findings for second half
+                    elf_to_cord.update({i: new_cord})
+                    if new_cord in n_elf_to_cord.keys():
+                        n_elf_to_cord[new_cord] += 1
+                    else:
+                        n_elf_to_cord.update({new_cord: 1})
+                    break
     return elf_to_cord, n_elf_to_cord
 
 
@@ -104,7 +120,12 @@ def parse(f):
                 elves.update({elves_index: {
                     'row': row_index,
                     'col': col_index,
-                    'lod': ['N', 'S', 'W', 'E']
+                    'neighbors in direction': {
+                        'N': False,
+                        'S': False,
+                        'W': False,
+                        'E': False
+                    }
                 }})
                 elves_index += 1
     return elves
@@ -120,4 +141,4 @@ if __name__ == '__main__':
     parsed_file = parse(file)
     p1, p2 = solution(parsed_file)
     print('part1:', p1)
-    print('part1:', p2)
+    print('part2:', p2)
