@@ -13,7 +13,7 @@ etc
 returns a list of strings
 '''
 def line_str(day: int, test=False):
-    with open('../' + get_folder(test) + '/day' + str(day) + '.txt', 'r') as file:
+    with open(get_folder(test) + '/day' + str(day) + '.txt', 'r') as file:
         lines = file.read().split('\n')
     return lines
 
@@ -26,7 +26,7 @@ etc
 returns a list of integers
 '''
 def line_int(day: int, test=False):
-    with open('../' + get_folder(test) + '/day' + str(day) + '.txt', 'r') as file:
+    with open(get_folder(test) + '/day' + str(day) + '.txt', 'r') as file:
         lines = file.read().split('\n')
     new_lines = []
     for n in lines:
