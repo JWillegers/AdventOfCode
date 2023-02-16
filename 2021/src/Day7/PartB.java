@@ -15,7 +15,7 @@ public class PartB {
     }
 
     public void setup() {
-        String input = "" // PUT YOUR INPUT HERE
+        String input = ""; // PUT YOUR INPUT HERE
         String[] split = input.split(",");
         for (int i = 0; i < split.length; i++) {
             positions.add(Integer.parseInt(split[i]));
