@@ -1,0 +1,1 @@
+Put in this folder your own inputs as "dayXX.txt" where XX refers to the day.
