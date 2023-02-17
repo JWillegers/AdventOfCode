@@ -35,34 +35,45 @@ public class PartB {
     public void solution() {
         String[] split = otherline.split(",");
         Map<Integer, Integer> busses = new HashMap<>();
+        int biggest_interval = 0;
+        int biggest_inteval_key_offset = 0;
+        // parse input
         for (int i = 0; i < split.length; i++) {
             if (!split[i].equals("x")) {
                 try {
-                    busses.put(i, Integer.parseInt(split[i]));
+                    int interval = Integer.parseInt(split[i]);
+                    busses.put(i, interval);
+                    if (interval > biggest_interval) {
+                        biggest_interval = interval;
+                        biggest_inteval_key_offset = i;
+                    }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     System.exit(1);
                 }
             }
         }
-        boolean run = true;
-        long nextBusTime = timestamp;
-        while (run) {
-            run = false;
-            nextBusTime++;
-            if (nextBusTime % 100000000 == 0) {
-                System.out.println(nextBusTime);
-            }
 
-            for (int slot : busses.keySet()) {
-                if ((nextBusTime + slot) % busses.get(slot) != 0) {
-                    run = true;
-                    break;
+        // because of the text, we can set the timestamp to later
+        timestamp = (long) 1e14;
+        while (timestamp % biggest_interval != 1) {
+            timestamp++;
+        }
+
+        boolean solutionFound = false;
+        while (!solutionFound) {
+            solutionFound = true;
+            for (Map.Entry<Integer, Integer> bus : busses.entrySet()) {
+                if ((timestamp + bus.getKey() - biggest_inteval_key_offset) % bus.getValue() != 1) {
+                    solutionFound = false;
                 }
+            }
+            if (!solutionFound) {
+                timestamp += biggest_interval;
             }
         }
 
-
-        System.out.println(nextBusTime);
+        // timestamp first bus leaving - 1 because off by one - offset
+        System.out.println(timestamp - 1 - biggest_inteval_key_offset);
     }
 }
