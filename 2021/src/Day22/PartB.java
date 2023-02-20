@@ -62,6 +62,11 @@ public class PartB {
                 }
             }
             System.out.println(volume);
+            // Only case 4: 2621950122807544
+            // Cases 2 & 4: 2617774534071931
+
+
+
         } catch (
         IOException e) {
             e.printStackTrace();
@@ -82,8 +87,11 @@ public class PartB {
 
                     break;
                 case 2:
-
-                    break;
+                    List<Cube> toProcess = caseTwo(input, toBeRemoved, processedCube);
+                    for (Cube c : toProcess) {
+                        newlyProcessedCubes.addAll(process(c, processedCubes));
+                    }
+                    return newlyProcessedCubes;
                 case 4:
                     input = caseFour(input, toBeRemoved, processedCube);
                     break;
@@ -143,14 +151,19 @@ public class PartB {
         return r;
     }
 
-    //END GENERAL
-    //START CASE FOUR
-
-    protected Cube caseFour(Cube input, List<Cord> toBeRemoved, Cube processedCube) {
+    protected Cube removeCords(Cube input, List<Cord> toBeRemoved) {
         //remove old cords
         for (Cord cordToBeRemoved : toBeRemoved) {
             input.removeCorner(cordToBeRemoved);
         }
+        return input;
+    }
+
+    //END GENERAL
+    //START CASE FOUR
+
+    protected Cube caseFour(Cube input, List<Cord> toBeRemoved, Cube processedCube) {
+        input = removeCords(input, toBeRemoved);
         //find plane the cords of input lie on
         List<Cord> toAdd = caseFourFindNewCords(input, processedCube);
         for (Cord c : toAdd) {
@@ -170,6 +183,10 @@ public class PartB {
             yPlane = yPlane && baseline.y == input.corners.get(i).y;
             zPlane = zPlane && baseline.z == input.corners.get(i).z;
         }
+        assert(xPlane || yPlane || zPlane);
+        assert(!(xPlane && yPlane));
+        assert(!(xPlane && zPlane));
+        assert(!(yPlane && zPlane));
 
         //Find plane that new points need to be added on
         List<Cord> toAdd = new ArrayList<>();
@@ -207,5 +224,145 @@ public class PartB {
     }
 
     //END CASE FOUR
+    //START CASE TWO
 
+    protected List<Cube> caseTwo(Cube input, List<Cord> toBeRemoved, Cube processedCube) {
+        input = removeCords(input, toBeRemoved);
+
+        //find on which line the 2 removed cords lie
+        Cord c0 = toBeRemoved.get(0);
+        Cord c1 = toBeRemoved.get(1);
+        boolean xLine = c0.x != c1.x;
+        boolean yLine = c0.y != c1.y;
+        boolean zLine = c0.z != c1.z;
+        assert(xLine || yLine || zLine);
+        assert(!(xLine && yLine));
+        assert(!(xLine && zLine));
+        assert(!(yLine && zLine));
+
+        return caseTwoXorY(input, processedCube, xLine, zLine);
+    }
+
+
+    protected List<Cube> caseTwoXorY(Cube input, Cube processedCube, boolean xLine, boolean zLine) {
+        List<Cube> dividedCubes = caseTwoDivide(input, zLine);
+        Cube cubeSize2 = dividedCubes.get(0);
+        Cube cubeSize4 = dividedCubes.get(1);
+        List<Cube> returnList = new ArrayList<>();
+
+        //process cubeSize4
+        List<Cord> toAdd = caseFourFindNewCords(cubeSize4, processedCube);
+        for(Cord c : toAdd) {
+            cubeSize4.addCorner(c);
+        }
+        returnList.add(cubeSize4);
+
+        //process cubeSize2
+        Cord c0 = cubeSize2.corners.get(0);
+        Map<String, Cord> minMaxProcessedCube = findMinMaxOfCube(processedCube);
+
+        if (zLine) {
+            returnList.add(caseTwoCubeZ(c0, cubeSize2, cubeSize4, minMaxProcessedCube));
+        } else {
+            returnList.add(caseTwoCubeXorY(c0, cubeSize2, cubeSize4, minMaxProcessedCube, xLine));
+        }
+        return returnList;
+    }
+
+    protected List<Cube> caseTwoDivide(Cube input, boolean zLine) {
+        List<Cube> returnList = new ArrayList<>();
+        Cube cube1 = new Cube(input.on);
+        Cube cube2 = new Cube(input.on);
+        cube1.addCorner(input.corners.get(0));
+        if (zLine) {
+            int y = input.corners.get(0).y;
+            for (int i = 1; i < input.corners.size(); i++) {
+                Cord c = input.corners.get(i);
+                if (c.y == y) {
+                    cube1.addCorner(c);
+                } else {
+                    cube2.addCorner(c);
+                }
+            }
+        } else {
+            int z = input.corners.get(0).z;
+            for (int i = 1; i < input.corners.size(); i++) {
+                Cord c = input.corners.get(i);
+                if (c.z == z) {
+                    cube1.addCorner(c);
+                } else {
+                    cube2.addCorner(c);
+                }
+            }
+        }
+        Cube cubeSize2 = cube1.corners.size() == 4 ? cube2 : cube1;
+        Cube cubeSize4 = cube1.corners.size() == 4 ? cube1 : cube2;
+        returnList.add(cubeSize2);
+        returnList.add(cubeSize4);
+        return returnList;
+    }
+
+    protected Cube caseTwoCubeZ(Cord c0, Cube cubeSize2, Cube cubeSize4, Map<String, Cord> minMaxProcessedCube) {
+        List<Cord> toAdd = new ArrayList<>();
+        //find 2 points that lie on the same x cord as the 2 points in cubeSize2
+        int y = c0.y < cubeSize4.corners.get(0).y ?
+                minMaxProcessedCube.get(maximum).y : minMaxProcessedCube.get(minimum).y;
+        // cannot loop over cubeSize2 and add something to it at the same
+        for (Cord c : cubeSize2.corners) {
+            toAdd.add(new Cord(c.x, y, c.z));
+        }
+        for (Cord c : toAdd) {
+            cubeSize2.addCorner(c);
+        }
+        toAdd.clear();
+
+        //find the last 4 cords to complete the cube
+        int x = c0.x < minMaxProcessedCube.get(minimum).x ?
+                minMaxProcessedCube.get(minimum).x - 1 : minMaxProcessedCube.get(maximum).x + 1;
+        for (Cord c : cubeSize2.corners) {
+            toAdd.add(new Cord(x, c.y, c.z));
+        }
+        for (Cord c : toAdd) {
+            cubeSize2.addCorner(c);
+        }
+
+        return cubeSize2;
+    }
+
+    protected Cube caseTwoCubeXorY(Cord c0, Cube cubeSize2, Cube cubeSize4, Map<String, Cord> minMaxProcessedCube, boolean xLine) {
+        List<Cord> toAdd = new ArrayList<>();
+        //find 2 points that lie on the same z cord as the 2 points in cubeSize2
+        int z = c0.z < cubeSize4.corners.get(0).z ?
+                minMaxProcessedCube.get(maximum).z : minMaxProcessedCube.get(minimum).z;
+        // cannot loop over cubeSize2 and add something to it at the same
+        for (Cord c : cubeSize2.corners) {
+            toAdd.add(new Cord(c.x, c.y, z));
+        }
+        for(Cord c : toAdd) {
+            cubeSize2.addCorner(c);
+        }
+        toAdd.clear();
+
+        //find the last 4 cords to complete the cube
+        if (xLine) {
+            int y = c0.y < minMaxProcessedCube.get(minimum).y ?
+                    minMaxProcessedCube.get(minimum).y - 1 : minMaxProcessedCube.get(maximum).y + 1;
+            for (Cord c : cubeSize2.corners) {
+                toAdd.add(new Cord(c.x, y, c.z));
+            }
+            for(Cord c : toAdd) {
+                cubeSize2.addCorner(c);
+            }
+        } else {
+            int x = c0.x < minMaxProcessedCube.get(minimum).x ?
+                    minMaxProcessedCube.get(minimum).x - 1 : minMaxProcessedCube.get(maximum).x + 1;
+            for (Cord c : cubeSize2.corners) {
+                toAdd.add(new Cord(x, c.y, c.z));
+            }
+            for(Cord c : toAdd) {
+                cubeSize2.addCorner(c);
+            }
+        }
+        return cubeSize2;
+    }
 }
