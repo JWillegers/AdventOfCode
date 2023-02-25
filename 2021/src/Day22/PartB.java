@@ -240,11 +240,6 @@ public class PartB {
         assert(!(xLine && zLine));
         assert(!(yLine && zLine));
 
-        return caseTwoXorY(input, processedCube, xLine, zLine);
-    }
-
-
-    protected List<Cube> caseTwoXorY(Cube input, Cube processedCube, boolean xLine, boolean zLine) {
         List<Cube> dividedCubes = caseTwoDivide(input, zLine);
         Cube cubeSize2 = dividedCubes.get(0);
         Cube cubeSize4 = dividedCubes.get(1);
@@ -258,14 +253,15 @@ public class PartB {
         returnList.add(cubeSize4);
 
         //process cubeSize2
-        Cord c0 = cubeSize2.corners.get(0);
+        c0 = cubeSize2.corners.get(0);
         Map<String, Cord> minMaxProcessedCube = findMinMaxOfCube(processedCube);
 
         if (zLine) {
-            returnList.add(caseTwoCubeZ(c0, cubeSize2, cubeSize4, minMaxProcessedCube));
+            returnList.add(caseTwoZ(c0, cubeSize2, cubeSize4, minMaxProcessedCube));
         } else {
-            returnList.add(caseTwoCubeXorY(c0, cubeSize2, cubeSize4, minMaxProcessedCube, xLine));
+            returnList.add(caseTwoXorY(c0, cubeSize2, cubeSize4, minMaxProcessedCube, xLine));
         }
+
         return returnList;
     }
 
@@ -302,7 +298,7 @@ public class PartB {
         return returnList;
     }
 
-    protected Cube caseTwoCubeZ(Cord c0, Cube cubeSize2, Cube cubeSize4, Map<String, Cord> minMaxProcessedCube) {
+    protected Cube caseTwoZ(Cord c0, Cube cubeSize2, Cube cubeSize4, Map<String, Cord> minMaxProcessedCube) {
         List<Cord> toAdd = new ArrayList<>();
         //find 2 points that lie on the same x cord as the 2 points in cubeSize2
         int y = c0.y < cubeSize4.corners.get(0).y ?
@@ -329,7 +325,7 @@ public class PartB {
         return cubeSize2;
     }
 
-    protected Cube caseTwoCubeXorY(Cord c0, Cube cubeSize2, Cube cubeSize4, Map<String, Cord> minMaxProcessedCube, boolean xLine) {
+    protected Cube caseTwoXorY(Cord c0, Cube cubeSize2, Cube cubeSize4, Map<String, Cord> minMaxProcessedCube, boolean xLine) {
         List<Cord> toAdd = new ArrayList<>();
         //find 2 points that lie on the same z cord as the 2 points in cubeSize2
         int z = c0.z < cubeSize4.corners.get(0).z ?
@@ -364,5 +360,76 @@ public class PartB {
             }
         }
         return cubeSize2;
+    }
+
+    protected List<Cube> caseOne(Cube input, List<Cord> toBeRemoved, Cube processedCube) {
+        //find cord of the processed cube that lies within input (needed later)
+        Cord pc = findOverlap(processedCube, input).get(0);
+
+        //remove cord in to be removed and divide input
+        input = removeCords(input, toBeRemoved);
+
+        Cord r = toBeRemoved.get(0);
+        Cube cubeSize1 = new Cube(input.on);
+        Cube cubeSize2 = new Cube(input.on);
+        Cube cubeSize4 = new Cube(input.on);
+
+        for (Cord c : input.corners) {
+            if (c.z != r.z) {
+                cubeSize4.corners.add(c);
+            } else if (c.y != r.y) {
+                cubeSize2.corners.add(c);
+            } else {
+                cubeSize1.corners.add(c);
+            }
+        }
+
+        assert(cubeSize1.corners.size() == 1);
+        assert(cubeSize2.corners.size() == 2);
+        assert(cubeSize4.corners.size() == 4);
+
+        //process cubeSize4
+        List<Cube> newCubes = new ArrayList<>();
+        List<Cord> toAdd = caseFourFindNewCords(cubeSize4, processedCube);
+        for(Cord c : toAdd) {
+            cubeSize4.addCorner(c);
+        }
+        newCubes.add(cubeSize4);
+
+        //process cubeSize2
+        Cord c0 = cubeSize2.corners.get(0);
+        cubeSize2 = caseTwoXorY(c0, cubeSize2, cubeSize4, findMinMaxOfCube(processedCube), true);
+        newCubes.add(cubeSize2);
+
+        //process cubeSize1
+        Cord cube1cord = cubeSize1.corners.get(0);
+        Cube newCube = new Cube(input.on);
+        List<Integer> x = new ArrayList<>();
+        if (pc.x < cube1cord.x) {
+            x.add(pc.x + 1);
+        } else if (pc.x > cube1cord.x) {
+            x.add(pc.x - 1);
+        } else {
+            System.out.println("ERROR: equality in caseOne");
+            System.exit(1);
+        }
+        x.add(cubeSize1.corners.get(0).x);
+        List<Integer> y = new ArrayList<>();
+        y.add(pc.y);
+        y.add(cubeSize1.corners.get(0).y);
+        List<Integer> z = new ArrayList<>();
+        z.add(pc.z);
+        z.add(cubeSize1.corners.get(0).z);
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 2; j++) {
+                for(int k = 0; k < 2; k++) {
+                    newCube.addCorner(new Cord(x.get(i), y.get(j), z.get(k)));
+                }
+            }
+        }
+        newCubes.add(newCube);
+
+        return newCubes;
     }
 }

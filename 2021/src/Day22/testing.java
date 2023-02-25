@@ -234,25 +234,23 @@ class testing {
         List<Cube> returnList = partB.caseTwo(cube1, toBeRemoved, cube2);
         assertEquals(2, returnList.size());
         Map<String, Cord> minmax0 = partB.findMinMaxOfCube(returnList.get(0));
-        String min0 = partB.minimum;
-        String max0 = partB.maximum;
+        String min = partB.minimum;
+        String max = partB.maximum;
         assertTrue(returnList.get(0).on);
-        assertEquals(0, minmax0.get(min0).x);
-        assertEquals(0, minmax0.get(min0).y);
-        assertEquals(0, minmax0.get(min0).z);
-        assertEquals(10, minmax0.get(max0).x);
-        assertEquals(10, minmax0.get(max0).y);
-        assertEquals(4, minmax0.get(max0).z);
+        assertEquals(0, minmax0.get(min).x);
+        assertEquals(0, minmax0.get(min).y);
+        assertEquals(0, minmax0.get(min).z);
+        assertEquals(10, minmax0.get(max).x);
+        assertEquals(10, minmax0.get(max).y);
+        assertEquals(4, minmax0.get(max).z);
         Map<String, Cord> minmax1 = partB.findMinMaxOfCube(returnList.get(1));
-        String min1 = partB.minimum;
-        String max1 = partB.maximum;
         assertTrue(returnList.get(0).on);
-        assertEquals(0, minmax1.get(min1).x);
-        assertEquals(0, minmax1.get(min1).y);
-        assertEquals(5, minmax1.get(min1).z);
-        assertEquals(10, minmax1.get(max1).x);
-        assertEquals(4, minmax1.get(max1).y);
-        assertEquals(10, minmax1.get(max1).z);
+        assertEquals(0, minmax1.get(min).x);
+        assertEquals(0, minmax1.get(min).y);
+        assertEquals(5, minmax1.get(min).z);
+        assertEquals(10, minmax1.get(max).x);
+        assertEquals(4, minmax1.get(max).y);
+        assertEquals(10, minmax1.get(max).z);
     }
 
     @Test
@@ -271,25 +269,23 @@ class testing {
         List<Cube> returnList = partB.caseTwo(cube1, toBeRemoved, cube2);
         assertEquals(2, returnList.size());
         Map<String, Cord> minmax0 = partB.findMinMaxOfCube(returnList.get(0));
-        String min0 = partB.minimum;
-        String max0 = partB.maximum;
+        String min = partB.minimum;
+        String max = partB.maximum;
         assertFalse(returnList.get(0).on);
-        assertEquals(0, minmax0.get(min0).x);
-        assertEquals(0, minmax0.get(min0).y);
-        assertEquals(7, minmax0.get(min0).z);
-        assertEquals(10, minmax0.get(max0).x);
-        assertEquals(10, minmax0.get(max0).y);
-        assertEquals(10, minmax0.get(max0).z);
+        assertEquals(0, minmax0.get(min).x);
+        assertEquals(0, minmax0.get(min).y);
+        assertEquals(7, minmax0.get(min).z);
+        assertEquals(10, minmax0.get(max).x);
+        assertEquals(10, minmax0.get(max).y);
+        assertEquals(10, minmax0.get(max).z);
         Map<String, Cord> minmax1 = partB.findMinMaxOfCube(returnList.get(1));
-        String min1 = partB.minimum;
-        String max1 = partB.maximum;
         assertFalse(returnList.get(1).on);
-        assertEquals(0, minmax1.get(min1).x);
-        assertEquals(0, minmax1.get(min1).y);
-        assertEquals(0, minmax1.get(min1).z);
-        assertEquals(2, minmax1.get(max1).x);
-        assertEquals(10, minmax1.get(max1).y);
-        assertEquals(6, minmax1.get(max1).z);
+        assertEquals(0, minmax1.get(min).x);
+        assertEquals(0, minmax1.get(min).y);
+        assertEquals(0, minmax1.get(min).z);
+        assertEquals(2, minmax1.get(max).x);
+        assertEquals(10, minmax1.get(max).y);
+        assertEquals(6, minmax1.get(max).z);
     }
 
     @Test
@@ -308,25 +304,23 @@ class testing {
         List<Cube> returnList = partB.caseTwo(cube1, toBeRemoved, cube2);
         assertEquals(2, returnList.size());
         Map<String, Cord> minmax0 = partB.findMinMaxOfCube(returnList.get(0));
-        String min0 = partB.minimum;
-        String max0 = partB.maximum;
+        String min = partB.minimum;
+        String max = partB.maximum;
         assertFalse(returnList.get(0).on);
-        assertEquals(0, minmax0.get(min0).x);
-        assertEquals(7, minmax0.get(min0).y);
-        assertEquals(0, minmax0.get(min0).z);
-        assertEquals(10, minmax0.get(max0).x);
-        assertEquals(10, minmax0.get(max0).y);
-        assertEquals(10, minmax0.get(max0).z);
+        assertEquals(0, minmax0.get(min).x);
+        assertEquals(7, minmax0.get(min).y);
+        assertEquals(0, minmax0.get(min).z);
+        assertEquals(10, minmax0.get(max).x);
+        assertEquals(10, minmax0.get(max).y);
+        assertEquals(10, minmax0.get(max).z);
         Map<String, Cord> minmax1 = partB.findMinMaxOfCube(returnList.get(1));
-        String min1 = partB.minimum;
-        String max1 = partB.maximum;
         assertFalse(returnList.get(1).on);
-        assertEquals(0, minmax1.get(min1).x);
-        assertEquals(0, minmax1.get(min1).y);
-        assertEquals(0, minmax1.get(min1).z);
-        assertEquals(5, minmax1.get(max1).x);
-        assertEquals(6, minmax1.get(max1).y);
-        assertEquals(10, minmax1.get(max1).z);
+        assertEquals(0, minmax1.get(min).x);
+        assertEquals(0, minmax1.get(min).y);
+        assertEquals(0, minmax1.get(min).z);
+        assertEquals(5, minmax1.get(max).x);
+        assertEquals(6, minmax1.get(max).y);
+        assertEquals(10, minmax1.get(max).z);
     }
 
     @Test
@@ -347,24 +341,61 @@ class testing {
         List<Cube> returnList = partB.process(cube1, pc);
         assertEquals(2, returnList.size());
         Map<String, Cord> minmax0 = partB.findMinMaxOfCube(returnList.get(0));
-        String min0 = partB.minimum;
-        String max0 = partB.maximum;
+        String min = partB.minimum;
+        String max = partB.maximum;
         assertTrue(returnList.get(0).on);
-        assertEquals(0, minmax0.get(min0).x);
-        assertEquals(5, minmax0.get(min0).y);
-        assertEquals(0, minmax0.get(min0).z);
-        assertEquals(10, minmax0.get(max0).x);
-        assertEquals(10, minmax0.get(max0).y);
-        assertEquals(10, minmax0.get(max0).z);
+        assertEquals(0, minmax0.get(min).x);
+        assertEquals(5, minmax0.get(min).y);
+        assertEquals(0, minmax0.get(min).z);
+        assertEquals(10, minmax0.get(max).x);
+        assertEquals(10, minmax0.get(max).y);
+        assertEquals(10, minmax0.get(max).z);
         Map<String, Cord> minmax1 = partB.findMinMaxOfCube(returnList.get(1));
-        String min1 = partB.minimum;
-        String max1 = partB.maximum;
         assertTrue(returnList.get(1).on);
-        assertEquals(0, minmax1.get(min1).x);
-        assertEquals(0, minmax1.get(min1).y);
-        assertEquals(0, minmax1.get(min1).z);
-        assertEquals(5, minmax1.get(max1).x);
-        assertEquals(4, minmax1.get(max1).y);
-        assertEquals(10, minmax1.get(max1).z);
+        assertEquals(0, minmax1.get(min).x);
+        assertEquals(0, minmax1.get(min).y);
+        assertEquals(0, minmax1.get(min).z);
+        assertEquals(5, minmax1.get(max).x);
+        assertEquals(4, minmax1.get(max).y);
+        assertEquals(10, minmax1.get(max).z);
+    }
+
+    @Test
+    void caseOne() {
+        PartB partB = new PartB();
+        Cube cube1 = new Cube(true);
+        cube1.generatePerfectCube(0, 10);
+        List<Cord> toBeRemoved = new ArrayList<>();
+        toBeRemoved.add(cube1.corners.get(0));
+        Cube cube2 = new Cube(true);
+        cube2.generatePerfectCube(-6, 10);
+        List<Cube> returnList = partB.caseOne(cube1, toBeRemoved, cube2);
+        assertEquals(3, returnList.size());
+        Map<String, Cord> minmax0 = partB.findMinMaxOfCube(returnList.get(0));
+        String min = partB.minimum;
+        String max = partB.maximum;
+        assertTrue(returnList.get(0).on);
+        assertEquals(0, minmax0.get(min).x);
+        assertEquals(0, minmax0.get(min).y);
+        assertEquals(5, minmax0.get(min).z);
+        assertEquals(10, minmax0.get(max).x);
+        assertEquals(10, minmax0.get(max).y);
+        assertEquals(10, minmax0.get(max).z);
+        Map<String, Cord> minmax1 = partB.findMinMaxOfCube(returnList.get(1));
+        assertTrue(returnList.get(0).on);
+        assertEquals(0, minmax1.get(min).x);
+        assertEquals(5, minmax1.get(min).y);
+        assertEquals(0, minmax1.get(min).z);
+        assertEquals(10, minmax1.get(max).x);
+        assertEquals(10, minmax1.get(max).y);
+        assertEquals(4, minmax1.get(max).z);
+        Map<String, Cord> minmax2 = partB.findMinMaxOfCube(returnList.get(2));
+        assertTrue(returnList.get(0).on);
+        assertEquals(5, minmax2.get(min).x);
+        assertEquals(0, minmax2.get(min).y);
+        assertEquals(0, minmax2.get(min).z);
+        assertEquals(10, minmax2.get(max).x);
+        assertEquals(4, minmax2.get(max).y);
+        assertEquals(4, minmax2.get(max).z);
     }
 }
