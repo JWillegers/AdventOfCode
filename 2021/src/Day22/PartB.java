@@ -64,6 +64,7 @@ public class PartB {
             System.out.println(volume);
             // Only case 4: 2621950122807544
             // Cases 2 & 4: 2617774534071931
+            // Cases 1, 2, 4: 2616056978794596 (incorrect)
 
 
 
@@ -84,11 +85,14 @@ public class PartB {
                 case 0:
                     break;
                 case 1:
-
-                    break;
+                    List<Cube> toProcess1 = caseOne(input, toBeRemoved, processedCube);
+                    for (Cube c : toProcess1) {
+                        newlyProcessedCubes.addAll(process(c, processedCubes));
+                    }
+                    return newlyProcessedCubes;
                 case 2:
-                    List<Cube> toProcess = caseTwo(input, toBeRemoved, processedCube);
-                    for (Cube c : toProcess) {
+                    List<Cube> toProcess2 = caseTwo(input, toBeRemoved, processedCube);
+                    for (Cube c : toProcess2) {
                         newlyProcessedCubes.addAll(process(c, processedCubes));
                     }
                     return newlyProcessedCubes;
