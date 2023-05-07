@@ -2,7 +2,7 @@
 
 My attempt at solving all [AoC](https://adventofcode.com/2022) puzzles of 2022 in Python3.
 All code for the solutions can be found in the solutions' folder.
-All personal input are not in the repository.
+All personal input are not in the repository. To be able to run the code, make a .txt file in /inputFiles called "dayXX.txt" where XX is the day number without leading zero.
 The testFiles are inputs copied form the AoC website, and they are in the text of the corresponding day.
 
 ## Libraries needed
@@ -13,7 +13,7 @@ Any library used but not in this list is assumed to be a standard library
 ## Interesting puzzles
 - Day 7: Traveling through files
 - Day 9: Moving rope
-  - testFiles/day91.txt and testFiles/day92.txt are test runs for this day
+  - note: testFiles/day91.txt and testFiles/day92.txt are test runs for this day
 - Day 10: Clock circuit
 - Day 11 (part 2): Managing big numbers
 - Day 16: Travelling salesman problem
@@ -21,5 +21,5 @@ Any library used but not in this list is assumed to be a standard library
   - part2: simulated annealing
 - Day 17: Tetris (Doing something a billion times)
 - Day 20: Linked List
-- Day 22: Needed a goodwritten unittest to finish this problem (day22tests.py)
-  - These tests are written for my input, they may fail for your input
+- Day 22: Needed a well-written unittest to finish this problem (day22tests.py)
+  - note: These tests are written for my input, they may fail for your input
