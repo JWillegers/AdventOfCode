@@ -6,8 +6,9 @@ Remember, not all code is optimized nor the smartest implementation. The code is
 
 Table of year and language.
 
-| Year | Language  |
-|------|-----------|
-| 2020 | Java      |
-| 2021 | Java      |
-| 2022 | Python3   |
+| Year | Language |
+|------|----------|
+| 2019 | C++      |
+| 2020 | Java     |
+| 2021 | Java     |
+| 2022 | Python3  |
