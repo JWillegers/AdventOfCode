@@ -10,11 +10,13 @@ public class Solution {
     private int tileSize = 10; //Program is only tested on tileSize = 10, changing number can give in unexpected results or errors
     private final List<Tile> allTiles = new ArrayList<>();
     private final List<Tile> unusedTiles = new ArrayList<>();
+    private String[][] image;
     public static void main(String[] args) {
         Day20.Solution sol = new Day20.Solution();
         sol.readFile();
         sol.createImage();
         sol.solutionPartOne();
+        sol.concatTiles();
     }
 
 
@@ -209,6 +211,65 @@ public class Solution {
         }
         System.out.println("Part 1: " + result);
     }
+
+    private void concatTiles() {
+        int tilesN = (int) Math.sqrt(allTiles.size());
+        int imageSize = tilesN * tileSize - 2 * tilesN;
+        image = new String[imageSize][imageSize];
+        Tile topleft = findTopLeft();
+        Tile currentTile = topleft;
+
+        for (int i = 0; i < tilesN; i++) {
+            for (int col = 0; col < tilesN; col++) {
+                for (int j = 1; j < tileSize - 1; j++) {
+                    for (int k = 1; k < tileSize - 1; k++) {
+                        image[(tileSize * i - 2 * i) + (j - 1)][(tileSize * col - 2 * col) + (k - 1)] = currentTile.pixels[j][k];
+                    }
+                }
+                currentTile = currentTile.side[1];
+            }
+            currentTile = topleft.side[2];
+            topleft = currentTile;
+        }
+        printImage(imageSize);
+    }
+
+    public Tile findTopLeft() {
+        for (Tile tile : allTiles) {
+            int emptySideCounter = 0;
+            for (Tile side : tile.side) {
+                if (side == null) {
+                    emptySideCounter++;
+                }
+            }
+            if (emptySideCounter == 2 && tile.side[0] == null && tile.side[3] == null) {
+                return tile;
+            }
+        }
+        System.out.println("No topleft found");
+        System.exit(1);
+        return null;
+    }
+
+    /**
+     * Used for debugging purposes
+     */
+    public void printImage(int imageSize) {
+        for (int i = 0; i < imageSize; i++) {
+            String line = "";
+            for (int j = 0; j < imageSize; j++) {
+                line = line + image[i][j];
+            }
+            System.out.println(line);
+        }
+    }
+
+    /*
+    01234567890123456789
+                      #
+    #    ##    ##    ###
+     #  #  #  #  #  #
+     */
 
     public int getTileSize() {
         return tileSize;
