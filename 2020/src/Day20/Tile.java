@@ -5,7 +5,7 @@ public class Tile {
     /** ID of the tile */
     int id;
     /** All the pixels in the tile */
-    boolean[][] pixels;
+    String[][] pixels;
     /**Neighbours of this tile
      * 0 = North
      * 1 = East
@@ -16,7 +16,7 @@ public class Tile {
     /** If true tile is not allowed to rotate or flip */
     boolean locked;
 
-    public Tile(int id, boolean[][] tile, Solution solution) {
+    public Tile(int id, String[][] tile, Solution solution) {
         this.id = id;
         this.pixels = tile;
         this.side = new Tile[4];
@@ -38,7 +38,7 @@ public class Tile {
     public void rotate() {
         for (int i = 0; i < parent.getTileSize() / 2; i++) {
             for (int j = 0; j < parent.getTileSize() / 2; j++) {
-                boolean temp = pixels[i][j];
+                String temp = pixels[i][j];
                 int farEdge = parent.getTileSize() - 1;
                 pixels[i][j] = pixels[farEdge - j][i];
                 pixels[farEdge - j][i] = pixels[farEdge - i][farEdge - j];
@@ -54,7 +54,7 @@ public class Tile {
     public void flip() {
         for (int i = 0; i < parent.getTileSize(); i++) {
             for (int j = 0; j < parent.getTileSize() / 2; j++) {
-                boolean temp = pixels[i][j];
+                String temp = pixels[i][j];
                 int farEdge = parent.getTileSize() - 1;
                 pixels[i][j] = pixels[i][farEdge - j];
                 pixels[i][farEdge - j] = temp;

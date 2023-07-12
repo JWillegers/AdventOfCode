@@ -9,7 +9,7 @@ import java.util.List;
 public class Solution {
     private int tileSize = 10; //Program is only tested on tileSize = 10, changing number can give in unexpected results or errors
     private final List<Tile> allTiles = new ArrayList<>();
-   private final List<Tile> unusedTiles = new ArrayList<>();
+    private final List<Tile> unusedTiles = new ArrayList<>();
     public static void main(String[] args) {
         Day20.Solution sol = new Day20.Solution();
         sol.readFile();
@@ -28,20 +28,20 @@ public class Solution {
         try {
             reader = new BufferedReader(new FileReader("2020/src/Day20/test.txt"));
             String line = reader.readLine();
-            boolean[][] tile = null;
+            String[][] tile = null;
             int id = 0;
             int lineCounter = 0;
 
             while (line != null) {
                 if (line.contains("Tile")) {
                     //create new tile
-                    tile = new boolean[tileSize][tileSize];
+                    tile = new String[tileSize][tileSize];
                     String[] split = line.split(" ");
                     id = Integer.parseInt(split[1].replace(":", ""));
                     lineCounter = 0;
                 } else if (line.contains(".") || line.contains("#")) {
                     for(int i = 0; i < tileSize; i++) {
-                        tile[lineCounter][i] = line.charAt(i) == '#';
+                        tile[lineCounter][i] = String.valueOf(line.charAt(i));
                     }
                     lineCounter++;
                 } else {
@@ -109,7 +109,6 @@ public class Solution {
                     otherTile.rotate();
                     if (checkMatch(currentTile, otherTile, sideID)) {
                         matches.add(otherTile);
-                        System.out.println(currentTile.id + " matched with " + otherTile.id);
                         match = true;
                         break;
                     }
@@ -182,17 +181,17 @@ public class Solution {
      */
     private boolean checkMatch(Tile currentTile, Tile otherTile, int sideID) {
         for (int i = 0; i < tileSize; i++) {
-            if ((sideID == 0 && currentTile.pixels[0][i] != otherTile.pixels[tileSize - 1][i]) ||
-                    (sideID == 1 && currentTile.pixels[i][tileSize - 1] != otherTile.pixels[i][0]) ||
-                    (sideID == 2 && currentTile.pixels[tileSize - 1][i] != otherTile.pixels[0][i]) ||
-                    (sideID == 3 && currentTile.pixels[i][0] != otherTile.pixels[i][tileSize - 1])) {
+            if ((sideID == 0 && !currentTile.pixels[0][i].equals(otherTile.pixels[tileSize - 1][i])) ||
+                    (sideID == 1 && !currentTile.pixels[i][tileSize - 1].equals(otherTile.pixels[i][0])) ||
+                    (sideID == 2 && !currentTile.pixels[tileSize - 1][i].equals(otherTile.pixels[0][i])) ||
+                    (sideID == 3 && !currentTile.pixels[i][0].equals(otherTile.pixels[i][tileSize - 1]))) {
                 return false;
             }
         }
         return true;
     }
 
-    public void solutionPartOne() {
+    private void solutionPartOne() {
         long result = 1;
         for (Tile tile : allTiles) {
             int emptySideCounter = 0;

@@ -22,19 +22,19 @@ class Testing {
          */
         Solution solution = new Solution();
         solution.setTileSize(4);
-        boolean[][] pixels = new boolean[4][4];
-        pixels[0][0] = true;
-        pixels[1][0] = true;
-        pixels[2][1] = true;
+        String[][] pixels = new String[4][4];
+        pixels[0][0] = "#";
+        pixels[1][0] = "#";
+        pixels[2][1] = "#";
 
         Tile t = new Tile(0, pixels, solution);
         t.rotate();
-        assertFalse(t.pixels[0][0]);
-        assertTrue(t.pixels[0][3]);
-        assertFalse(t.pixels[1][0]);
-        assertTrue(t.pixels[0][2]);
-        assertFalse(t.pixels[2][1]);
-        assertTrue(t.pixels[1][1]);
+        assertNull(t.pixels[0][0]);
+        assertEquals("#", t.pixels[0][3]);
+        assertNull(t.pixels[1][0]);
+        assertEquals("#", t.pixels[0][2]);
+        assertNull(t.pixels[2][1]);
+        assertEquals("#", t.pixels[1][1]);
     }
 
     @Test
@@ -54,18 +54,18 @@ class Testing {
          */
         Solution solution = new Solution();
         solution.setTileSize(4);
-        boolean[][] pixels = new boolean[4][4];
-        pixels[0][0] = true;
-        pixels[1][0] = true;
-        pixels[2][1] = true;
+        String[][] pixels = new String[4][4];
+        pixels[0][0] = "#";
+        pixels[1][0] = "#";
+        pixels[2][1] = "#";
 
         Tile t = new Tile(0, pixels, solution);
         t.flip();
-        assertFalse(t.pixels[0][0]);
-        assertTrue(t.pixels[0][3]);
-        assertFalse(t.pixels[1][0]);
-        assertTrue(t.pixels[1][3]);
-        assertFalse(t.pixels[2][1]);
-        assertTrue(t.pixels[2][2]);
+        assertNull(t.pixels[0][0]);
+        assertEquals("#", t.pixels[0][3]);
+        assertNull(t.pixels[1][0]);
+        assertEquals("#", t.pixels[1][3]);
+        assertNull(t.pixels[2][1]);
+        assertEquals("#", t.pixels[2][2]);
     }
 }
