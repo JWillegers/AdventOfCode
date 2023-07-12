@@ -1,5 +1,6 @@
 package Day20;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,6 +11,7 @@ public class Solution {
     private int tileSize = 10; //Program is only tested on tileSize = 10, changing number can give in unexpected results or errors
     private final List<Tile> allTiles = new ArrayList<>();
     private final List<Tile> unusedTiles = new ArrayList<>();
+    private int imageSize;
     private String[][] image;
     public static void main(String[] args) {
         Day20.Solution sol = new Day20.Solution();
@@ -17,6 +19,8 @@ public class Solution {
         sol.createImage();
         sol.solutionPartOne();
         sol.concatTiles();
+        sol.findSeaMonsters();
+        sol.solutionPartTwo();
     }
 
 
@@ -28,7 +32,7 @@ public class Solution {
 
         // read input
         try {
-            reader = new BufferedReader(new FileReader("2020/src/Day20/test.txt"));
+            reader = new BufferedReader(new FileReader("2020/src/Day20/input.txt"));
             String line = reader.readLine();
             String[][] tile = null;
             int id = 0;
@@ -132,6 +136,10 @@ public class Solution {
         return returnList;
     }
 
+    /**
+     * For the currentTile, make sure all neighbours are stored correctly
+     * @param currentTile
+     */
     public void checkSides(Tile currentTile) {
         for (Tile t : allTiles) {
             for (int sideID = 0; sideID < 4; sideID++) {
@@ -193,6 +201,9 @@ public class Solution {
         return true;
     }
 
+    /**
+     * Calculate the solution to part one
+     */
     private void solutionPartOne() {
         long result = 1;
         for (Tile tile : allTiles) {
@@ -212,9 +223,12 @@ public class Solution {
         System.out.println("Part 1: " + result);
     }
 
+    /**
+     * Concatenate all tiles such that the image is in one variable
+     */
     private void concatTiles() {
         int tilesN = (int) Math.sqrt(allTiles.size());
-        int imageSize = tilesN * tileSize - 2 * tilesN;
+        imageSize = tilesN * tileSize - 2 * tilesN;
         image = new String[imageSize][imageSize];
         Tile topleft = findTopLeft();
         Tile currentTile = topleft;
@@ -231,9 +245,13 @@ public class Solution {
             currentTile = topleft.side[2];
             topleft = currentTile;
         }
-        printImage(imageSize);
+        //printImage();
     }
 
+
+    /**
+     * @return tile that is in the top left corner
+     */
     public Tile findTopLeft() {
         for (Tile tile : allTiles) {
             int emptySideCounter = 0;
@@ -252,9 +270,117 @@ public class Solution {
     }
 
     /**
+     * Try to find the sea monsters in the water.
+     * Pattern:
+     *      *      *     x01234567890123456789
+     *      *      *     0                  #
+     *      *      *     1#    ##    ##    ###
+     *      *      *     2 #  #  #  #  #  #
+     */
+    public void findSeaMonsters() {
+        //make pattern
+        String[][] pattern = new String[3][20];
+        for (int i = 0; i < pattern.length; i++) {
+            for (int j = 0; j < pattern[0].length; j++) {
+                if ((i == 0 && j == 18) ||
+                        (i == 1 && (j == 0 || j == 5 || j == 6 || j == 11 || j == 12 || j == 17 || j == 18 || j == 19)) ||
+                        (i == 2 && (j == 1 || j == 4 || j == 7 || j == 10 || j == 13 || j == 16))) {
+                    pattern[i][j] = "#";
+                } else {
+                    pattern[i][j] = " ";
+                }
+            }
+        }
+        //printPattern(pattern);
+
+        //rotate and flip
+        for (int s = 0; s < 2; s++) {
+            flipImage();
+            for(int r = 0; r < 4; r++) {
+                rotateImage();
+                if (checkImageAgainstPattern(pattern)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * Check of parts of the image and the pattern overlap. Mark relevant parts with "M"
+     */
+    public boolean checkImageAgainstPattern(String[][] pattern) {
+        boolean monsterFound = false;
+        for (int i = 0; i < imageSize - pattern.length - 1; i++) { //image row
+            for (int j = 0; j < imageSize - pattern[0].length - 1; j++) { //image column
+                boolean match = true;
+                for (int a = 0; a < pattern.length; a++) { //pattern row
+                    if (!match) {
+                        break;
+                    }
+                    for (int b = 0; b < pattern[0].length; b++) { //patern column
+                        if (pattern[a][b].equals("#") && !image[i + a][j + b].equals("#")) {
+                            match = false;
+                            break;
+                        }
+                    }
+                }
+                if (match) {
+                    monsterFound = true;
+                    for (int a = 0; a < pattern.length; a++) { //pattern row
+                        for (int b = 0; b < pattern[0].length; b++) { //patern column
+                            if (pattern[a][b].equals("#")) {
+                                image[i + a][j + b] = "M";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return monsterFound;
+    }
+
+    public void solutionPartTwo() {
+        //printImage();
+        int roughWaterCounter = 0;
+        for (int i = 0; i < imageSize; i++) { //image row
+            for (int j = 0; j < imageSize; j++) { //image column
+                if (image[i][j].equals("#")) {
+                    roughWaterCounter++;
+                }
+            }
+        }
+        System.out.println("Part 2: " + roughWaterCounter);
+    }
+
+    public void flipImage() {
+        for (int i = 0; i < imageSize; i++) {
+            for (int j = 0; j < imageSize / 2; j++) {
+                String temp = image[i][j];
+                int farEdge = imageSize - 1;
+                image[i][j] = image[i][farEdge - j];
+                image[i][farEdge - j] = temp;
+            }
+        }
+    }
+
+    public void rotateImage() {
+        for (int i = 0; i < imageSize / 2; i++) {
+            for (int j = 0; j < imageSize / 2; j++) {
+                String temp = image[i][j];
+                int farEdge = imageSize - 1;
+                image[i][j] = image[farEdge - j][i];
+                image[farEdge - j][i] = image[farEdge - i][farEdge - j];
+                image[farEdge - i][farEdge - j] = image[j][farEdge - i];
+                image[j][farEdge - i] = temp;
+            }
+        }
+    }
+
+    /**
      * Used for debugging purposes
      */
-    public void printImage(int imageSize) {
+    public void printImage() {
+        System.out.println(" ");
         for (int i = 0; i < imageSize; i++) {
             String line = "";
             for (int j = 0; j < imageSize; j++) {
@@ -264,12 +390,20 @@ public class Solution {
         }
     }
 
-    /*
-    01234567890123456789
-                      #
-    #    ##    ##    ###
-     #  #  #  #  #  #
+    /**
+     * Used for debugging purposes
      */
+    public void printPattern(String[][] pattern) {
+        System.out.println(" ");
+        for (int i = 0; i < pattern.length; i++) {
+            String line = "";
+            for (int j = 0; j < pattern[0].length; j++) {
+                line = line + pattern[i][j];
+            }
+            System.out.println(line);
+        }
+    }
+
 
     public int getTileSize() {
         return tileSize;
