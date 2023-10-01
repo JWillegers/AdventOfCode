@@ -61,7 +61,10 @@ public class PartB {
                     }
                 }
             }
-            System.out.println(volume);
+
+            System.out.println("valid solution: " + validSolution(volume, input_cubes));
+            System.out.println("solution: " + volume);
+            System.out.println(volume >= Long.parseLong("2758514936282235")); //TODO remove
             // Only case 4: 2621950122807544
             // Cases 2 & 4: 2617774534071931
             // Cases 1, 2, 4: 2616056978794596 (incorrect)
@@ -74,6 +77,27 @@ public class PartB {
         }
     }
 
+    protected boolean validSolution(long volume, List<Cube> input_cubes) {
+        int minX = infinity;
+        int maxX = -infinity;
+        int minY = infinity;
+        int maxY = -infinity;
+        int minZ = infinity;
+        int maxZ = -infinity;
+        for (Cube cube : input_cubes) {
+            for (Cord cord : cube.corners) {
+                minX = Math.min(minX, cord.x);
+                maxX = Math.max(maxX, cord.x);
+                minY = Math.min(minY, cord.y);
+                maxY = Math.max(maxY, cord.y);
+                minZ = Math.min(minZ, cord.z);
+                maxZ = Math.max(maxZ, cord.z);
+            }
+        }
+        long maxVolume = (long) Math.abs(maxX - minX) * Math.abs(maxY - minY) * Math.abs(maxZ - minZ);
+        return volume < maxVolume;
+    }
+
     //START GENERAL
 
     //Return all newly processed cubes
@@ -83,7 +107,15 @@ public class PartB {
             List<Cord> toBeRemoved = findOverlap(input, processedCube);
             switch (toBeRemoved.size()) {
                 case 0:
-                    break;
+                    List<Cube> toProcess0 = caseZero(input, processedCube);
+                    if (toProcess0 == null || toProcess0.isEmpty()) {
+                        break;
+                    } else {
+                        for (Cube c : toProcess0) {
+                            newlyProcessedCubes.addAll(process(c, processedCubes));
+                        }
+                        return newlyProcessedCubes;
+                    }
                 case 1:
                     List<Cube> toProcess1 = caseOne(input, toBeRemoved, processedCube);
                     for (Cube c : toProcess1) {
@@ -435,5 +467,72 @@ public class PartB {
         newCubes.add(newCube);
 
         return newCubes;
+    }
+
+    protected List<Cube> caseZero(Cube input, Cube processedCube) {
+        List<Cord> reverseOverlap = findOverlap(processedCube, input);
+        switch (reverseOverlap.size()) {
+            case 0:
+                break;
+            case 2:
+                break;
+            case 4:
+                return caseZeroFour(input, reverseOverlap, processedCube);
+            case 8:
+                break;
+            default:
+                System.out.println("Error in 'caseZero', size not found: " + reverseOverlap.size());
+                System.exit(1);
+        }
+        return null;
+    }
+
+    protected List<Cube> caseZeroFour(Cube input, List<Cord> reverseOverlap, Cube processedCube) {
+        boolean xPlane = true;
+        boolean yPlane = true;
+        boolean zPlane = true;
+        List<Cube> toReturn = new ArrayList<>();
+        Map<String, Cord> minmaxInput = findMinMaxOfCube(input);
+        Map<String, Cord> minmaxProcessedCube = findMinMaxOfCube(processedCube);
+
+        //find on which plane the cords in reverseOverlap lie
+        for (int i = 0; i < reverseOverlap.size(); i++) {
+            Cord ci = reverseOverlap.get(i);
+            for (int j = i + 1; j < reverseOverlap.size(); j++) {
+                Cord cj = reverseOverlap.get(j);
+                xPlane = xPlane && ci.x == cj.x;
+                yPlane = yPlane && ci.y == cj.y;
+                zPlane = zPlane && ci.z == cj.z;
+            }
+        }
+
+        assert (xPlane || yPlane || zPlane);
+        assert(!(xPlane && yPlane));
+        assert(!(xPlane && zPlane));
+        assert(!(yPlane && zPlane));
+
+        if (xPlane || yPlane) {
+            List<Cord> upper = new ArrayList<>();
+            List<Cord> lower = new ArrayList<>();
+            for (Cord c : input.corners) {
+                if (c.z == minmaxInput.get(maximum).z) {
+                    upper.add(c);
+                } else {
+                    lower.add(c);
+                }
+            }
+            toReturn.add(caseZeroZ(minmaxProcessedCube.get(maximum).z + 1, upper, input.on));
+            toReturn.add(caseZeroZ(minmaxProcessedCube.get(minimum).z - 1, lower, input.on));
+        }
+        return toReturn;
+    }
+
+    protected Cube caseZeroZ(int z_processed_with_offset, List<Cord> input, boolean on) {
+        Cube toReturn = new Cube(on);
+        for (Cord c : input) {
+            toReturn.addCorner(c);
+            toReturn.addCorner(new Cord(c.x, c.y, z_processed_with_offset));
+        }
+        return toReturn;
     }
 }

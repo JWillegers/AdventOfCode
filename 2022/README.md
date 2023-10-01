@@ -1,9 +1,8 @@
 # AdventOfCode2022
 
-My attempt at solving all [AoC](https://adventofcode.com/2022) puzzles of 2022 in Python3. 
-All code for the solutions can be found in the solutions' folder. 
-All personal input are not in the repository. To be able to run the code, 
-make a .txt file in /inputFiles called "dayXX.txt" where XX is the day number without leading zero.
+My attempt at solving all [AoC](https://adventofcode.com/2022) puzzles of 2022 in Python3, version 3.10 or higher.
+All code for the solutions can be found in the solutions' folder.
+All personal input are not in the repository. To be able to run the code, make a .txt file in /inputFiles called "dayXX.txt" where XX is the day number without leading zero.
 The testFiles are inputs copied form the AoC website, and they are in the text of the corresponding day.
 
 ## Libraries needed

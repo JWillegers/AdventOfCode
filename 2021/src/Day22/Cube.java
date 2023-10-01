@@ -37,4 +37,14 @@ public class Cube {
             }
         }
     }
+
+    protected void generateImperfectCube(int offsetX, int offsetY, int offsetZ, int sizeX, int sizeY, int sizeZ) {
+        for (int i = offsetX; i < offsetX+sizeX+1; i += sizeX) {
+            for (int j = offsetY; j < offsetY+sizeY+1; j += sizeY) {
+                for (int k = offsetZ; k < offsetZ+sizeZ+1; k += sizeZ) {
+                    this.addCorner(new Cord(i, j, k));
+                }
+            }
+        }
+    }
 }
