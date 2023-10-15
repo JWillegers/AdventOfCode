@@ -1,15 +1,18 @@
 #include "../inc/test_readFile.h"
-#include "../inc/utils/readFile.h"
-#include<stdio.h>
-#include<unistd.h>
-#include<stdlib.h>
 
 
 int main() {
     char *buf;
-    buf=(char *)malloc(100*sizeof(char));
-    getcwd(buf,100);
-    printf("Current directory: %s \n",buf);
-    line_char("test.txt", 4, 4);22
-    return 0;
+    buf = (char *) malloc(100 * sizeof(char));
+    getcwd(buf, 100);
+    printf("Current directory: %s \n", buf);
+    char **txt = createCharArray(4, 4);
+    line_char("test.txt", txt, 4);
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            printf("%c", txt[i][j]);
+        }
+        printf("\n");
+    }
+    destroyCharArray(txt);
 }
