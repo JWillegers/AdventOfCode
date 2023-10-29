@@ -6,7 +6,7 @@
 #include "2DArray.h"
 
 //PUBLIC FUNCTIONS
-void line_char(char file[], char** txt, int max_col);
+void line_char(char file[], char** txt, int max_row, int max_col);
 
 //VARIABLES
 

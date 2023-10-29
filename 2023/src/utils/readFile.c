@@ -1,7 +1,7 @@
 #include "../../inc/utils/readFile.h"
 
 
-void line_char(char file[], char **txt, int max_col) {
+void line_char(char file[], char **txt, int max_row, int max_col) {
     //file is run from /AdventOfCode/cmake-build-debug
     char filename[] = "../2023/src/inputs/";
     strcat_s(filename, 128, file);
@@ -13,13 +13,12 @@ void line_char(char file[], char **txt, int max_col) {
     }
 
     char buffer[max_col];
-    int i = 0;
 
-    while (fgets(buffer, max_col, fp)) {
-        printf("%s", buffer);
-        //TODO copy buffer into txt
-        i += 1;
+    for (int i = 0; i < max_row; i++) {
+        fgets(buffer, max_col + 2, fp);
+        txt[i] = strdup(buffer);
     }
+    sleep(1);
 
     // close the file
     fclose(fp);
