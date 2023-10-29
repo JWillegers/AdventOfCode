@@ -7,11 +7,15 @@ int main() {
     getcwd(buf, 100);
     printf("Current directory: %s \n", buf);
 
+    int rows = 5;
+    int col = 4;
+
     printf("Now starting reading .txt as 2D char array:\n");
-    char **txt = createCharArray(4, 4);
-    line_char("test.txt", txt, 4, 4);
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
+    char **txt = createCharArray(rows, col);
+    readFile("test.txt", txt, NULL, rows, col);
+    for (int i = 0; i < rows; i++) {
+        printf("%d: ", i);
+        for (int j = 0; j < col; j++) {
             printf("%c", txt[i][j]);
         }
         printf("\n");
@@ -20,9 +24,9 @@ int main() {
     sleep(1);
 
     printf("\nNow starting reading .txt as long ints:\n");
-    long numbers[4];
-    line_int("test.txt", numbers, 4, 4);
-    for (int i = 0; i < 4; i++) {
+    long numbers[col];
+    readFile("test.txt", NULL, numbers, rows, col);
+    for (int i = 0; i < rows; i++) {
         printf("%ld\n", numbers[i]);
     }
     return 0;

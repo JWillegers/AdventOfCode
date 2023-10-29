@@ -19,3 +19,18 @@ void destroyCharArray(char** arr) {
     free(*arr);
     free(arr);
 }
+
+int** createIntArray(int row, int col) {
+    int* values = (int*) calloc(row*(col + 1), sizeof(int));
+    int** rows = (int**) malloc(row* sizeof(int*));
+    for (int i=0; i<row; ++i) {
+        rows[i] = values;
+    }
+
+    return rows;
+}
+
+void destroyIntArray(int** arr) {
+    free(*arr);
+    free(arr);
+}
