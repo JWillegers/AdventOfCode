@@ -1,5 +1,41 @@
 #include "../../inc/utils/parser.h"
 
+#define BUF_SIZE 65535
+
+/**
+ * Find the dimensions of the file
+ * @param file filename
+ */
+Struct findFileDimensions(char file[]) {
+    char filename[] = "../2023/src/inputs/";
+    strcat_s(filename, 128, file);
+    FILE *fp = fopen(filename, "r");
+
+    Struct s;
+    s.row = 0;
+    s.col = -1;
+
+    if (fp == NULL) {
+        printf("Error: could not open file \"%s\" \n", filename);
+        return s;
+    }
+    char buf[BUF_SIZE];
+    for(;;) {
+        fgets(buf, BUF_SIZE + 2, fp);
+        buf[strcspn(buf, "\n")] = '\0';
+        s.row += 1;
+        s.col = max(s.col, strlen(buf));
+
+        if (feof(fp)) {
+            break;
+        }
+    }
+
+    fclose(fp);
+    return s;
+}
+
+
 /**
  * Read a .txt document
  * @param file filename
@@ -8,7 +44,7 @@
  * @param max_row amount of rows in the file
  * @param max_col max amount of characters in a row
  */
-int readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
+void readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
     //file is run from /AdventOfCode/cmake-build-debug
     char filename[] = "../2023/src/inputs/";
     strcat_s(filename, 128, file);
@@ -16,7 +52,6 @@ int readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
 
     if (fp == NULL) {
         printf("Error: could not open file \"%s\" \n", filename);
-        return 404;
     }
 
     char buffer[max_col];
@@ -33,12 +68,13 @@ int readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
             if (lng != NULL) {
                 lng[i] = strtol(buffer, &overflow, 10);
             }
+        } else if (lng != NULL) {
+            lng[i] = 0;
         }
     }
 
     // close the file
     fclose(fp);
-    return 0;
 }
 
 /**

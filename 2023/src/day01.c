@@ -2,21 +2,18 @@
 #include <ctype.h>
 
 void day01() {
-    int rows = 1000;
-    int cols = 60;
-
-    char **input = createCharArray(rows, cols);
-    if (readFile("day01.txt", input, NULL, rows, cols) == 404) {
-        return;
-    }
+    Struct dimensions = findFileDimensions("day01.txt");
+    if (dimensions.col == -1) { return; }
+    char **input = createCharArray(dimensions.row, dimensions.col);
+    readFile("day01.txt", input, NULL, dimensions.row, dimensions.col);
     long sumPart1 = 0;
     long sumPart2 = 0;
-    for (int i = 0; i < rows; i++) {
+    for (int i = 0; i < dimensions.row; i++) {
         char numPart1[] = "00";
         char numPart2[] = "00";
         bool firstPart1 = true;
         bool firstPart2 = true;
-        for (int j = 0; j < cols; j++) {
+        for (int j = 0; j < dimensions.col; j++) {
             char c = input[i][j];
             if (isdigit(c)) {
                 if (firstPart1) {

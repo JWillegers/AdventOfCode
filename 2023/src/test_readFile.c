@@ -7,15 +7,17 @@ int test() {
     getcwd(buf, 100);
     printf("Current directory: %s \n", buf);
 
-    int rows = 5;
-    int col = 4;
+
+    Struct s = findFileDimensions("test.txt");
+
+    printf("%d %d\n", s.row, s.col);
 
     printf("Now starting reading .txt as 2D char array:\n");
-    char **txt = createCharArray(rows, col);
-    readFile("test.txt", txt, NULL, rows, col);
-    for (int i = 0; i < rows; i++) {
+    char **txt = createCharArray(s.row, s.col);
+    readFile("test.txt", txt, NULL, s.row, s.col);
+    for (int i = 0; i < s.row; i++) {
         printf("%d: ", i);
-        for (int j = 0; j < col; j++) {
+        for (int j = 0; j < s.col; j++) {
             printf("%c", txt[i][j]);
         }
         printf("\n");
@@ -24,9 +26,9 @@ int test() {
     sleep(1);
 
     printf("\nNow starting reading .txt as long ints:\n");
-    long numbers[rows];
-    readFile("test.txt", NULL, numbers, rows, col);
-    for (int i = 0; i < rows; i++) {
+    long numbers[s.row];
+    readFile("test.txt", NULL, numbers, s.row, s.col);
+    for (int i = 0; i < s.row; i++) {
         printf("%ld\n", numbers[i]);
     }
     return 0;
