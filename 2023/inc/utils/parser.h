@@ -7,5 +7,6 @@
 
 //PUBLIC FUNCTIONS
 void readFile(char file[], char** chr, long *lng, int max_row, int max_col);
+int numberAtChar(char* str, int index);
 
 #endif //ADVENTOFCODE_PARSER_H

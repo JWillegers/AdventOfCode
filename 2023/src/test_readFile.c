@@ -1,7 +1,7 @@
 #include "../inc/utils/parser.h"
 
 
-int main() {
+int test() {
     char *buf;
     buf = (char *) malloc(100 * sizeof(char));
     getcwd(buf, 100);
@@ -24,7 +24,7 @@ int main() {
     sleep(1);
 
     printf("\nNow starting reading .txt as long ints:\n");
-    long numbers[col];
+    long numbers[rows];
     readFile("test.txt", NULL, numbers, rows, col);
     for (int i = 0; i < rows; i++) {
         printf("%ld\n", numbers[i]);

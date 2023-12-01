@@ -1,11 +1,10 @@
-#ifndef ADVENTOFCODE_TEST_READFILE_H
-#define ADVENTOFCODE_TEST_READFILE_H
+#ifndef ADVENTOFCODE_DAY01_H
+#define ADVENTOFCODE_DAY01_H
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "../inc/utils/2DArray.h"
 #include "../inc/utils/parser.h"
 
-int main();
-
-#endif //ADVENTOFCODE_TEST_READFILE_H
+#endif //ADVENTOFCODE_DAY01_H
