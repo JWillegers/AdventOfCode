@@ -6,7 +6,8 @@
 #include "2DArray.h"
 
 //PUBLIC FUNCTIONS
-void readFile(char file[], char** chr, long *lng, int max_row, int max_col);
+int readFile(char file[], char** chr, long *lng, int max_row, int max_col);
 int numberAtChar(char* str, int index);
+void formatAnswerLong(int day, long part1, long part2);
 
 #endif //ADVENTOFCODE_PARSER_H

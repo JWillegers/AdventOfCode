@@ -8,7 +8,7 @@
  * @param max_row amount of rows in the file
  * @param max_col max amount of characters in a row
  */
-void readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
+int readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
     //file is run from /AdventOfCode/cmake-build-debug
     char filename[] = "../2023/src/inputs/";
     strcat_s(filename, 128, file);
@@ -16,7 +16,7 @@ void readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
 
     if (fp == NULL) {
         printf("Error: could not open file \"%s\" \n", filename);
-        return;
+        return 404;
     }
 
     char buffer[max_col];
@@ -38,6 +38,7 @@ void readFile(char file[], char** chr, long *lng, int max_row, int max_col) {
 
     // close the file
     fclose(fp);
+    return 0;
 }
 
 /**
@@ -92,4 +93,14 @@ int numberAtChar(char* str, int index) {
     }
 
     return -1;
+}
+
+/**
+ * Standard format of answers
+ * @param day
+ * @param part1
+ * @param part2
+ */
+void formatAnswerLong(int day, long part1, long part2) {
+    printf("===== Day %d ===== \nPart1: %ld \nPart2: %ld\n", day, part1, part2);
 }

@@ -1,12 +1,14 @@
 #include "../inc/day01.h"
 #include <ctype.h>
 
-int main() {
+void day01() {
     int rows = 1000;
     int cols = 60;
 
     char **input = createCharArray(rows, cols);
-    readFile("day01.txt", input, NULL, rows, cols);
+    if (readFile("day01.txt", input, NULL, rows, cols) == 404) {
+        return;
+    }
     long sumPart1 = 0;
     long sumPart2 = 0;
     for (int i = 0; i < rows; i++) {
@@ -50,6 +52,5 @@ int main() {
         sumPart1 += strtol(numPart1, &output, 10);
         sumPart2 += strtol(numPart2, &output, 10);
     }
-    printf("Part1: %ld\n", sumPart1);
-    printf("Part2: %ld\n", sumPart2);
+    formatAnswerLong(1, sumPart1, sumPart2);
 }
