@@ -54,4 +54,5 @@ void day02() {
     }
 
     formatAnswerLong(2, sumPart1, sumPowerPart2);
+    destroyCharArray(input);
 }

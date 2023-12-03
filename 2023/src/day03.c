@@ -14,6 +14,11 @@ void day03() {
     int sumPart2 = 0;
     char* overflow;
 
+    //Initializing dict
+    int size = 0;
+    char** keys = createCharArray();
+    int values[200];
+
     for (int i = 0; i < dimensions.row; i++) {
         int j = 0;
         while (j < dimensions.col) {
@@ -42,10 +47,10 @@ void day03() {
                     sumPart1 += num_;
 
                     if (key[3] == '*') {
-                        if (getIndex(key) == -1) {
-                            insert(key, num_);
+                        if (getIndex(key, size, keys) == -1) {
+                            size = insert(key, num_, size, keys, values);
                         } else {
-                            sumPart2 += num_ * get(key);
+                            sumPart2 += num_ * get(key, size, keys, values);
                         }
                     }
                 }
@@ -56,6 +61,7 @@ void day03() {
         }
     }
     formatAnswerLong(3, sumPart1, sumPart2);
+    destroyCharArray(input);
 }
 
 int findSizeOfNumber(char **input, int i, int j) {
