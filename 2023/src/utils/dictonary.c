@@ -1,4 +1,4 @@
-#include "../../inc/utils/dictonary.h"
+#include "../../inc/utils/dictionary.h"
 
 /*
  * Credit https://www.geeksforgeeks.org/implementation-on-map-or-dictionary-data-structure-in-c/

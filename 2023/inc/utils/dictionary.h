@@ -1,5 +1,5 @@
-#ifndef ADVENTOFCODE_DICTONARY_H
-#define ADVENTOFCODE_DICTONARY_H
+#ifndef ADVENTOFCODE_DICTIONARY_H
+#define ADVENTOFCODE_DICTIONARY_H
 
 
 /*
@@ -18,4 +18,4 @@ void insert(char key[], int value);
 int get(char key[]);
 void printMap();
 
-#endif //ADVENTOFCODE_DICTONARY_H
+#endif //ADVENTOFCODE_DICTIONARY_H

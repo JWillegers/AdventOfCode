@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "2DArray.h"
-#include "minmax.h"
+#include "math.h"
 
 struct dimensions {
     int row, col;
