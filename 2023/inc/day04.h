@@ -10,7 +10,7 @@
 #include <math.h>
 #include "../inc/utils/2DArray.h"
 #include "../inc/utils/parser.h"
-#include "../inc/utils/dictonary.h"
+#include "../inc/utils/dictionary.h"
 #include "../inc/utils/array.h"
 
 void day04();

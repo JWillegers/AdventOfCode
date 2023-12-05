@@ -137,6 +137,16 @@ int numberAtChar(char* str, int index) {
  * @param part1
  * @param part2
  */
-void formatAnswerLong(int day, long part1, long part2) {
+void formatAnswer(int day, long part1, long part2) {
     printf("===== Day %d ===== \nPart1: %ld \nPart2: %ld\n", day, part1, part2);
+}
+
+/**
+ * Standard format of answers
+ * @param day
+ * @param part1
+ * @param part2
+ */
+void formatAnswerLongLong(int day, long long part1, long long part2) {
+    printf("===== Day %d ===== \nPart1: %lld \nPart2: %lld\n", day, part1, part2);
 }

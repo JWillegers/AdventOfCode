@@ -58,6 +58,6 @@ void day04() {
     for (int a = 0; a < dimensions.row; a++) {
         sumPart2 += copies[a];
     }
-    formatAnswerLong(4, sumPart1, sumPart2);
+    formatAnswer(4, sumPart1, sumPart2);
     destroyCharArray(input);
 }

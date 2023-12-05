@@ -16,6 +16,7 @@ typedef struct dimensions Struct;
 Struct findFileDimensions(char file[]);
 void readFile(char file[], char** chr, long *lng, int max_row, int max_col);
 int numberAtChar(char* str, int index);
-void formatAnswerLong(int day, long part1, long part2);
+void formatAnswer(int day, long part1, long part2);
+void formatAnswerLongLong(int day, long long part1, long long part2);
 
 #endif //ADVENTOFCODE_PARSER_H

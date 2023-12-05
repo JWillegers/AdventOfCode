@@ -53,6 +53,6 @@ void day02() {
         sumPowerPart2 += red * blue * green;
     }
 
-    formatAnswerLong(2, sumPart1, sumPowerPart2);
+    formatAnswer(2, sumPart1, sumPowerPart2);
     destroyCharArray(input);
 }

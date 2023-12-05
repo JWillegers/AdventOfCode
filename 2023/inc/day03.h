@@ -9,7 +9,7 @@
 #include <ctype.h>
 #include "../inc/utils/2DArray.h"
 #include "../inc/utils/parser.h"
-#include "../inc/utils/dictonary.h"
+#include "../inc/utils/dictionary.h"
 
 void day03();
 

@@ -55,7 +55,7 @@ void day03() {
             }
         }
     }
-    formatAnswerLong(3, sumPart1, sumPart2);
+    formatAnswer(3, sumPart1, sumPart2);
     destroyCharArray(input);
 }
 

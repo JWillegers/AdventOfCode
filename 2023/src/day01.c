@@ -49,6 +49,6 @@ void day01() {
         sumPart1 += strtol(numPart1, &output, 10);
         sumPart2 += strtol(numPart2, &output, 10);
     }
-    formatAnswerLong(1, sumPart1, sumPart2);
+    formatAnswer(1, sumPart1, sumPart2);
     destroyCharArray(input);
 }
