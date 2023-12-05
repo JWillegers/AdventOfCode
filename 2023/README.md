@@ -7,9 +7,7 @@ such as pointers, memory allocation, and 2D arrays. One of my goals this year is
 Put you inputs into src/inputs as a .txt file. The naming structure this year is a follows: "inputXX.txt" 
 where XX is the number of the days, including leading zero's.
 
-## Running file (Linux)
-1. Open your terminal
-2. gcc main.c -o executable
-3. ./executable
+## Libraries
+I make use of the [libeom library](https://github.com/ericomeehan/libeom). Necessary files are already included.
 
 ## Interesting Puzzles
