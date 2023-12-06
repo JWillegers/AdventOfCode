@@ -6,7 +6,7 @@
  * @param b
  * @return
  */
-int min(int a, int b) {
+int imin(int a, int b) {
     if (a < b) { return a; }
     return b;
 }
@@ -17,7 +17,7 @@ int min(int a, int b) {
  * @param b
  * @return
  */
-int max(int a, int b) {
+int imax(int a, int b) {
     if (a > b) { return a; }
     return b;
 }
@@ -28,7 +28,7 @@ int max(int a, int b) {
  * @param b
  * @return
  */
-long long minLL(long long a, long long b) {
+long long llmin(long long a, long long b) {
     if (a < b) { return a; }
     return b;
 }
@@ -39,7 +39,7 @@ long long minLL(long long a, long long b) {
  * @param b
  * @return
  */
-long long maxLL(long long a, long long b) {
+long long llmax(long long a, long long b) {
     if (a > b) { return a; }
     return b;
 }
@@ -51,11 +51,11 @@ long long maxLL(long long a, long long b) {
  * @param toCheck
  * @return
  */
-bool isInBetween(int min, int max, int toCheck) {
+bool iIsInBetween(int min, int max, int toCheck) {
     return toCheck >= min && toCheck <= max;
 }
 
-bool isInBetweenLL(long long min, long long max, long long toCheck) {
+bool llIsInBetween(long long min, long long max, long long toCheck) {
     return toCheck >= min && toCheck <= max;
 }
 

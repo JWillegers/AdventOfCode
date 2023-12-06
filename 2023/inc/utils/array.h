@@ -8,10 +8,12 @@
 #include <string.h>
 #include "math.h"
 
-bool valueinarray(int val, int *arr, size_t n);
-int minIntInArray(int *arr, size_t n);
-int maxIntInArray(int *arr, size_t n);
-long long minLongInArray(long long *arr, size_t n);
-long long maxLongInArray(long long *arr, size_t n);
+bool valueInArray(int val, int *arr, size_t n);
+int iMinInArray(int *arr, size_t n);
+int iMaxInArray(int *arr, size_t n);
+long long lMinInArray(long long *arr, size_t n);
+long long lMaxInArray(long long *arr, size_t n);
+#define minInArray(x, y) _Generic((x), int: iMinInArray, long long: lMinInArray, default: lMinInArray)(x, y)
+#define maxInArray(x, y) _Generic((x), int: iMaxInArray, long long: lMaxInArray, default: lMaxInArray)(x, y)
 
 #endif //ADVENTOFCODE_ARRAY_H
