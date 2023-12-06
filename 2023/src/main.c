@@ -7,4 +7,5 @@ int main() {
     day03();
     day04();
     day05();
+    day06();
 }

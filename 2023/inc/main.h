@@ -7,5 +7,6 @@
 #include "../inc/day03.h"
 #include "../inc/day04.h"
 #include "../inc/day05.h"
+#include "../inc/day06.h"
 
 #endif //ADVENTOFCODE_MAIN_H
