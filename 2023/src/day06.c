@@ -1,7 +1,6 @@
 #include "../inc/day06.h"
 
-int parseRaceTime(Struct dimensions, char **input, long long *race_time);
-int parseRaceDistance(Struct dimensions, char **input, long long *race_distance);
+int parseRow(Struct dimensions, char **input, long long *arr, int row);
 
 void day06() {
     char filename[] = "day06.txt";
@@ -15,8 +14,8 @@ void day06() {
     long long productPart1 = 1;
     long long sumPart2 = 0;
 
-    int rt_pointer = parseRaceTime(dimensions, input, race_time);
-    int rdtb_pointer = parseRaceDistance(dimensions, input, race_distance_to_beat);
+    int rt_pointer = parseRow(dimensions, input, race_time, 0);
+    int rdtb_pointer = parseRow(dimensions, input, race_distance_to_beat, 1);
 
 
     /*
@@ -42,6 +41,8 @@ void day06() {
                 break;
             }
         }
+
+        //Process findings
         if (i < rdtb_pointer) {
             productPart1 *= numberOfWinningDistances;
         } else {
@@ -53,23 +54,23 @@ void day06() {
     destroyCharArray(input);
 }
 
-int parseRaceTime(Struct dimensions, char **input, long long *race_time) {
-    int rt_pointer = 0;
+int parseRow(Struct dimensions, char **input, long long *arr, int row) {
+    int pointer = 0;
     long long p2 = 0;
     int t = 0;
     while (t < dimensions.col) {
-        if (isdigit(input[0][t])) {
+        if (isdigit(input[row][t])) {
             int l = 1;
-            int num = input[0][t] - '0';
-            p2 = p2 * 10 + (input[0][t] - '0');
+            int num = input[row][t] - '0';
+            p2 = p2 * 10 + (input[row][t] - '0');
             for (int i = t + 1; i <= dimensions.col; i++) {
-                if (i != dimensions.col && isdigit(input[0][i])) {
-                    num = num * 10 + (input[0][i] - '0');
-                    p2 = p2 * 10 + (input[0][i] - '0');
+                if (i != dimensions.col && isdigit(input[row][i])) {
+                    num = num * 10 + (input[row][i] - '0');
+                    p2 = p2 * 10 + (input[row][i] - '0');
                     l += 1;
                 } else {
-                    race_time[rt_pointer] = num;
-                    rt_pointer += 1;
+                    arr[pointer] = num;
+                    pointer += 1;
                     break;
                 }
             }
@@ -78,35 +79,6 @@ int parseRaceTime(Struct dimensions, char **input, long long *race_time) {
             t += 1;
         };
     }
-    race_time[rt_pointer] = p2;
-    return rt_pointer;
-}
-
-int parseRaceDistance(Struct dimensions, char **input, long long *race_distance) {
-    int rd_pointer = 0;
-    long long p2 = 0;
-    int t = 0;
-    while (t < dimensions.col) {
-        if (isdigit(input[1][t])) {
-            int l = 1;
-            int num = input[1][t] - '0';
-            p2 = p2 * 10 + (input[1][t] - '0');
-            for (int i = t + 1; i <= dimensions.col; i++) {
-                if (i != dimensions.col && isdigit(input[1][i])) {
-                    num = num * 10 + (input[1][i] - '0');
-                    p2 = p2 * 10 + (input[1][i] - '0');
-                    l += 1;
-                } else {
-                    race_distance[rd_pointer] = num;
-                    rd_pointer += 1;
-                    break;
-                }
-            }
-            t += l;
-        } else {
-            t += 1;
-        };
-    }
-    race_distance[rd_pointer] = p2;
-    return rd_pointer;
+    arr[pointer] = p2;
+    return pointer;
 }
