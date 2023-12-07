@@ -31,7 +31,7 @@ void day04() {
                 }
                 int number = strtol(num, &overflow, 10);
                 if (foundSeparator) {
-                    if (valueInArray(number, card, 10)) {
+                    if (getFirstIndexOfValue(number, card, 10) != -1) {
                         winningNumbers += 1;
                     }
                 } else {

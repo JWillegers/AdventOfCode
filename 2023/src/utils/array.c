@@ -7,12 +7,12 @@
  * @param n
  * @return
  */
-bool valueInArray(int val, int *arr, size_t n) {
+int getFirstIndexOfValue(int val, int *arr, size_t n) {
     for(size_t i = 0; i < n; i++) {
         if(arr[i] == val)
-            return true;
+            return i;
     }
-    return false;
+    return -1;
 }
 
 /**

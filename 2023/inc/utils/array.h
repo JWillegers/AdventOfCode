@@ -8,7 +8,7 @@
 #include <string.h>
 #include "math.h"
 
-bool valueInArray(int val, int *arr, size_t n);
+int getFirstIndexOfValue(int val, int *arr, size_t n);
 int iMinInArray(int *arr, size_t n);
 int iMaxInArray(int *arr, size_t n);
 long long lMinInArray(long long *arr, size_t n);
