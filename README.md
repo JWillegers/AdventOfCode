@@ -8,9 +8,9 @@ Personal inputs are not provided, each year folder has a README with instruction
 
 Table of the year and the language I used for that said year.
 
-| Year | Language |
-|------|----------|
-| 2020 | Java     |
-| 2021 | Java     |
-| 2022 | Python3  |
-| 2023 | C        | 
+| Year | Language    |
+|------|-------------|
+| 2020 | Java        |
+| 2021 | Java        |
+| 2022 | Python3     |
+| 2023 | C & Python3 | 
