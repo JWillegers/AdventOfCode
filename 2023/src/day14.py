@@ -1,38 +1,38 @@
 from copy import deepcopy
 import time
 
-def solutionP1(input):
-    for col in range(len(input[0])):
+def solutionP1(input14):
+    for col in range(len(input14[0])):
         changes_made = True
-        first_empty_space = find_next_empty_space(input, 0, col)
+        first_empty_space = find_next_empty_space(input14, 0, col)
         index = first_empty_space + 1
-        while index < len(input):
-            if input[index][col] == 'O':
-                input[index][col] = '.'
-                input[first_empty_space][col] = 'O'
+        while index < len(input14):
+            if input14[index][col] == 'O':
+                input14[index][col] = '.'
+                input14[first_empty_space][col] = 'O'
                 first_empty_space += 1
-            if input[index][col] == '#':
-                first_empty_space = find_next_empty_space(input, index, col)
+            if input14[index][col] == '#':
+                first_empty_space = find_next_empty_space(input14, index, col)
                 if first_empty_space == -1:
                     break
                 index = first_empty_space
             index += 1
     
     p1 = 0
-    for row in range(len(input)):
-        p1 += input[row].count('O') * (len(input) - row)
+    for row in range(len(input14)):
+        p1 += input14[row].count('O') * (len(input14) - row)
 
     print("Part 1:", p1)
 
 
-def find_next_empty_space(input, starting_index, col):   
-    for index in range(starting_index, len(input)):
-        if input[index][col] == '.':
+def find_next_empty_space(input14, starting_index, col):
+    for index in range(starting_index, len(input14)):
+        if input14[index][col] == '.':
             return index
     return -1
 
 
-def solutionP2(input):
+def solutionP2(input14):
     limit = 75
     north = {}
     east = {}
@@ -44,12 +44,12 @@ def solutionP2(input):
     record_mode = False
     record_mode_start = -1
 
-    for row in range(len(input)):
-        for col in range(len(input[0])):
-            if input[row][col] == 'O':
+    for row in range(len(input14)):
+        for col in range(len(input14[0])):
+            if input14[row][col] == 'O':
                 round_rocks.append((row, col))
 
-            if input[row][col] == '#':
+            if input14[row][col] == '#':
                 continue
 
             #  north
@@ -57,25 +57,25 @@ def solutionP2(input):
                 north[(row, col)] = (row, col)
             else:
                 r = row - 1
-                while r >= 0 and input[r][col] != '#':
+                while r >= 0 and input14[r][col] != '#':
                     r -= 1
                 north[(row, col)] = (r + 1, col)
             
             #  east
-            if col == len(input[0]) - 1:
+            if col == len(input14[0]) - 1:
                 east[(row, col)] = (row, col)
             else:
                 c = col + 1
-                while c <= len(input[0]) - 1 and input[row][c] != '#':
+                while c <= len(input14[0]) - 1 and input14[row][c] != '#':
                     c += 1
                 east[(row, col)] = (row, c - 1)
 
             #  south
-            if row == len(input) - 1:
+            if row == len(input14) - 1:
                 south[(row, col)] = (row, col)
             else:
                 r = row + 1
-                while r <= len(input[0]) - 1 and input[r][col] != '#':
+                while r <= len(input14[0]) - 1 and input14[r][col] != '#':
                     r += 1
                 south[(row, col)] = (r - 1, col)
 
@@ -84,7 +84,7 @@ def solutionP2(input):
                 west[(row, col)] = (row, col)
             else:
                 c = col - 1
-                while c >= 0 and input[row][c] != '#':
+                while c >= 0 and input14[row][c] != '#':
                     c -= 1
                 west[(row, col)] = (row, c + 1)
 
@@ -159,11 +159,9 @@ def solutionP2(input):
 
         round_rocks = deepcopy(after_east)
 
-    #print(round_rocks)
-
     p2 = 0
     for rock in round_rocks:
-        p2 += len(input) - rock[0]
+        p2 += len(input14) - rock[0]
 
     print("Part 2:", p2)
     # 90182 too high         

@@ -1,5 +1,5 @@
-def solution(input):
-    steps = input.split(",")
+def solution(input15):
+    steps = input15.split(",")
     sumP1 = 0
     for step in steps:
         result = 0
