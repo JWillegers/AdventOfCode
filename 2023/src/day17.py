@@ -1,6 +1,9 @@
 import networkx as nx
 
 
+'''
+Code is not optimized!!!
+'''
 def solution(input17, min_count, max_count):
     directions = {-10: 'U', 10: 'D', -1: 'L', 1: 'R'}
     G = nx.Graph()
