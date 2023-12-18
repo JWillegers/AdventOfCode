@@ -6,11 +6,6 @@ import networkx as nx
 def solution(input17):
     directions = {-10: 'U', 10: 'D', -1: 'L', 1: 'R'}
     G = nx.Graph()
-    for row in range(len(input17)):
-        for col in range(len(input17[0])):
-            for direction in directions.values():
-                for count in range(1, 4):
-                    G.add_node((row, col, direction, count), score = 0)
     G.add_node((0, 0, 'O', 0), score = 0)
     queue = [(0, 0, 'O', 0)]
     while len(queue) > 0:
@@ -54,13 +49,14 @@ def solution(input17):
                 next_score = G.nodes[current]['score'] + input17[current[0] + offset_row][current[1] + offset_col]
 
                 next = (current[0] + offset_row, current[1] + offset_col, new_direction, next_count)
-                if len(G.edges(next)) > 0:
+                if next in G.nodes():
                     if next_score < G.nodes[next]['score']:
                         for edge in G.edges(next):
                             G.remove_edge(*edge)
                         G.add_edge(current, next)
                         G.nodes[next]['score'] = next_score
                 else:
+                    G.add_node(next)
                     G.add_edge(current, next)
                     G.nodes[next]['score'] = next_score
                     queue.append(next)
