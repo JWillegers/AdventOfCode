@@ -15,6 +15,7 @@ where XX is the number of the days, including leading zero's.
 Any library used but not in this list is assumed to be a standard library
 
 - numpy
+- networkx
 
 ## Interesting Puzzles
 day09: Interesting to learn an algorithm to find the previous or next number in a sequence
