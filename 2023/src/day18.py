@@ -30,7 +30,7 @@ def solution(input18, p2):
         corners.append(deepcopy(current))
 
     '''
-    Shoelace method.
+    Shoelace theory
     '''
     sumBlue = 0
     sumRed = 0
@@ -44,7 +44,7 @@ def solution(input18, p2):
     inner_area = int(abs((sumBlue - sumRed) / 2))
 
     '''
-    Pick's method
+    Pick's theorem
     instead of inner_area + boundary_points / 2 - 1
     I use inner_area + u_counter + l_counter + 1
     
