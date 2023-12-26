@@ -18,4 +18,7 @@ Any library used but not in this list is assumed to be a standard library
 - networkx
 
 ## Interesting Puzzles
-day09: Interesting to learn an algorithm to find the previous or next number in a sequence
+day09: Interesting to learn an algorithm to find the previous or next number in a sequence <br>
+day12: Reminded me of a [nonogram](https://en.wikipedia.org/wiki/Nonogram), but in one dimension.
+Algorithm implemented resembles the way I would solve a nonogram. <br>
+day18: Learned about [pick's theorem](https://en.wikipedia.org/wiki/Pick%27s_theorem) and [shoelace theory](https://www.geodose.com/2021/09/how-calculate-polygon-area-unordered-coordinates-points-python.html) today
