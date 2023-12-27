@@ -1,47 +1,58 @@
-def solution(input):
+def solution(input13):
     starting_index = 0
     index_next_empty_line = 0
     sumPart1 = 0
-    while index_next_empty_line < len(input) and starting_index < len(input):
+    while index_next_empty_line < len(input13) and starting_index < len(input13):
         #  find index_next_empty_line
-        for i in range(starting_index + 1, len(input)):
-            if len(input[i]) == 0:
+        for i in range(starting_index + 1, len(input13)):
+            if len(input13[i]) == 0:
                 index_next_empty_line = i
                 break
         if starting_index > index_next_empty_line:
-            index_next_empty_line = len(input)
+            index_next_empty_line = len(input13)
+
+        t = -1
 
         mirror_found = False
         # check vertical mirror
-        for i in range(len(input[starting_index]) - 1):
+        for col in range(len(input13[starting_index]) - 1):
             did_break = False
-            for j in range(starting_index, index_next_empty_line - 1):
+            for row in range(starting_index, index_next_empty_line - 1):
                 if did_break:
-                        break
-                for k in range(min(i, len(input[starting_index]) - 2 - i) + 1):
-                    if input[j][i - k] != input[j][i + k + 1]:
+                    break
+                for offset in range(min(col, len(input13[starting_index]) - 2 - col) + 1):
+                    if input13[row][col - offset] != input13[row][col + offset + 1]:
                         did_break = True
                         break
             if not did_break:
                 mirror_found = True
-                sumPart1 += i + 1
+                t = col + 1
+                sumPart1 += col + 1
                 break
 
         # check horizontal mirror
-        if not mirror_found:
-            for i in range(starting_index, index_next_empty_line - 1):
-                did_break = False
-                for j in range(len(input[starting_index])):
-                    if did_break:
-                        break
-                    for k in range(min(i - starting_index, index_next_empty_line - i - 2) + 1):
-                        if input[i - k][j] != input[i + k + 1][j]:
-                            did_break = True
-                            break
-                if not did_break:
-                    mirror_found = True
-                    sumPart1 += (i - starting_index + 1) * 100
+        #if not mirror_found:
+        for row in range(starting_index, index_next_empty_line - 1):
+            did_break = False
+            for col in range(len(input13[starting_index])):
+                if did_break:
                     break
+                for offset in range(min(row - starting_index, index_next_empty_line - row - 2) + 1):
+                    if input13[row - offset][col] != input13[row + offset + 1][col]:
+                        did_break = True
+                        break
+            if not did_break:
+                if (mirror_found):
+                    print(50*'=')
+                    print("start:", starting_index)
+                    print("vertical:", t)
+                    print("horizonatal:", row - starting_index + 1)
+                    for i in range(starting_index, index_next_empty_line):
+                        print(input13[i])
+                    print(50 * '=')
+                mirror_found = True
+                sumPart1 += (row - starting_index + 1) * 100
+                break
 
         if not mirror_found:
             print("ERROR mirror not found")
