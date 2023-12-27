@@ -22,3 +22,4 @@ day09: Interesting to learn an algorithm to find the previous or next number in 
 day12: Reminded me of a [nonogram](https://en.wikipedia.org/wiki/Nonogram), but in one dimension.
 Algorithm implemented resembles the way I would solve a nonogram. <br>
 day18: Learned about [pick's theorem](https://en.wikipedia.org/wiki/Pick%27s_theorem) and [shoelace theory](https://www.geodose.com/2021/09/how-calculate-polygon-area-unordered-coordinates-points-python.html) today
+day19: Enjoyed this puzzle where I had to check an input against a given set of rules (which were part of the puzzle input)
