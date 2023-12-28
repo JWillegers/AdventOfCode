@@ -11,9 +11,8 @@ def solution(input13):
         if starting_index > index_next_empty_line:
             index_next_empty_line = len(input13)
 
-        t = -1
-
         mirror_found = False
+
         # check vertical mirror
         for col in range(len(input13[starting_index]) - 1):
             did_break = False
@@ -26,7 +25,6 @@ def solution(input13):
                         break
             if not did_break:
                 mirror_found = True
-                t = col + 1
                 sumPart1 += col + 1
                 break
 
