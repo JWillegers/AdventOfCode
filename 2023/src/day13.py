@@ -17,7 +17,7 @@ def solution(input13):
         # check vertical mirror
         for col in range(len(input13[starting_index]) - 1):
             did_break = False
-            for row in range(starting_index, index_next_empty_line - 1):
+            for row in range(starting_index, index_next_empty_line):
                 if did_break:
                     break
                 for offset in range(min(col, len(input13[starting_index]) - 2 - col) + 1):
@@ -31,36 +31,28 @@ def solution(input13):
                 break
 
         # check horizontal mirror
-        #if not mirror_found:
-        for row in range(starting_index, index_next_empty_line - 1):
-            did_break = False
-            for col in range(len(input13[starting_index])):
-                if did_break:
-                    break
-                for offset in range(min(row - starting_index, index_next_empty_line - row - 2) + 1):
-                    if input13[row - offset][col] != input13[row + offset + 1][col]:
-                        did_break = True
+        if not mirror_found:
+            for row in range(starting_index, index_next_empty_line - 1):
+                did_break = False
+                for col in range(len(input13[starting_index])):
+                    if did_break:
                         break
-            if not did_break:
-                if (mirror_found):
-                    print(50*'=')
-                    print("start:", starting_index)
-                    print("vertical:", t)
-                    print("horizonatal:", row - starting_index + 1)
-                    for i in range(starting_index, index_next_empty_line):
-                        print(input13[i])
-                    print(50 * '=')
-                mirror_found = True
-                sumPart1 += (row - starting_index + 1) * 100
-                break
+                    for offset in range(min(row - starting_index, index_next_empty_line - row - 2) + 1):
+                        if input13[row - offset][col] != input13[row + offset + 1][col]:
+                            did_break = True
+                            break
+                if not did_break:
+                    mirror_found = True
+                    sumPart1 += (row - starting_index + 1) * 100
+                    break
 
         if not mirror_found:
             print("ERROR mirror not found")
             exit(1)
 
-        starting_index = index_next_empty_line + 1                   
+        starting_index = index_next_empty_line + 1
 
-    print("Part1: " ,sumPart1)
+    print("Part1: ", sumPart1)
 
 
 if __name__ == '__main__':
