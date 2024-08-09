@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -83,16 +84,14 @@ public class PartB {
                     System.exit(1);
                 }
 
-                long new_n2 = n1 * n2;
-                long new_a2 = (a1 * m2) % new_n2;
-                new_a2 = (new_a2 * n2) % new_n2;
-                long part2 = (a2 * m1) % new_n2;
-                part2 = (part2 * n1) % new_n2;
-                a2 = (new_a2 + part2) % new_n2;
-                n2 = new_n2;
-                //a2 = (a1 * m2 * n2 + a2 * m1 * n1) % (n1 * n2);
-                //n2 = n1 * n2;
-                a2 = (a2 + n2) % n2;
+                BigInteger new_n2 = BigInteger.valueOf(n1).multiply(BigInteger.valueOf(n2));
+                BigInteger new_a2 = BigInteger.valueOf(a1).multiply(BigInteger.valueOf(m2)).mod(new_n2);
+                new_a2 = new_a2.multiply(BigInteger.valueOf(n2)).mod(new_n2);
+                BigInteger part2 = BigInteger.valueOf(a2).multiply(BigInteger.valueOf(m1)).mod(new_n2);
+                part2 = part2.multiply(BigInteger.valueOf(n1)).mod(new_n2);
+                BigInteger BIa2 = new_a2.add(part2).mod(new_n2);
+                n2 = new_n2.longValueExact();
+                a2 = BIa2.add(new_n2).mod(new_n2).longValueExact();
             }
         }
 
