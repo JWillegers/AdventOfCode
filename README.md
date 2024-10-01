@@ -23,3 +23,7 @@ In file->Project Structure add the root folder of this project as Sources
 
 ### Python
 Depending on the year, go to that years README.md and find which packages need to be installed
+
+## Interesting puzzles
+All years (excl. 2020 & 2021) have a README.md which contains a section called 'Interesting puzzles'.
+In these sections I indicate which puzzles I found interesting to make at the time, possibly with reasons why.
