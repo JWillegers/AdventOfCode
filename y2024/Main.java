@@ -1,12 +1,12 @@
 package y2024;
 
 import y2024.Solutions.*;
-import y2024.Util.*;
+import Util_Java.*;
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        //grab all solutions (not necessarily complete)
+        //grab all solutions (not necessarily complete list)
         Solution[] allSolutions;
         allSolutions = new Solution[] {
                 new Day1()
@@ -19,6 +19,7 @@ public class Main {
             try {
                 solution.getInput(day, p);
 
+                // solve and time part 1
                 long start = System.nanoTime();
                 String result = solution.partOne();
                 double time = System.nanoTime() - start;
@@ -30,6 +31,7 @@ public class Main {
                     System.out.println(STR."Solution Part 1: \{result} (took \{time}ms)");
                 }
 
+                // solve and time part 2
                 start = System.nanoTime();
                 result = solution.partTwo();
                 time = System.nanoTime() - start;

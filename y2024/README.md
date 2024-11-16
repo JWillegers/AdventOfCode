@@ -2,8 +2,8 @@
 ## Goals this year
 - improve code readability
   - add more comments
-  - smaller function
-  - utils
+  - smaller functions
+  - utils --> ./Util_Java
 - run code from central script (main)
 - decrease run time: max 10 seconds per star
 
