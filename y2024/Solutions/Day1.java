@@ -1,7 +1,7 @@
 package y2024.Solutions;
 
 import java.io.IOException;
-import y2024.Util.*;
+import Util_Java.*;
 
 public class Day1 extends  Solution {
 

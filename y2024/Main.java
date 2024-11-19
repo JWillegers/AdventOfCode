@@ -15,7 +15,7 @@ public class Main {
 
         for (Solution solution : allSolutions) {
             int day = solution.getDay();
-            System.out.println(STR."===== Day \{day} =====");
+            System.out.println("===== Day " + day + " =====");
             try {
                 solution.getInput(day, p);
 
@@ -25,10 +25,10 @@ public class Main {
                 double time = System.nanoTime() - start;
                 if (time >  1_000_000_000.0) {
                     time = time / 1_000_000_000.0;
-                    System.out.println(STR."Solution Part 1: \{result} (took \{time}seconds)");
+                    System.out.println("Solution Part 1: " + result + " (took " + time + " seconds)");
                 } else {
                     time = time / 1_000_000.0;
-                    System.out.println(STR."Solution Part 1: \{result} (took \{time}ms)");
+                    System.out.println("Solution Part 1: " + result + " (took " + time + "ms)");
                 }
 
                 // solve and time part 2
@@ -37,10 +37,10 @@ public class Main {
                 time = System.nanoTime() - start;
                 if (time >  1_000_000_000.0) {
                     time = time / 1_000_000_000.0;
-                    System.out.println(STR."Solution Part 2: \{result} (took \{time}seconds)");
+                    System.out.println("Solution Part 2: " + result + " (took " + time + " seconds)");
                 } else {
                     time = time / 1_000_000.0;
-                    System.out.println(STR."Solution Part 2: \{result} (took \{time}ms)");
+                    System.out.println("Solution Part 2: " + result + " (took " + time + "ms)");
                 }
 
 

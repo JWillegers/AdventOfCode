@@ -18,7 +18,7 @@ public class Parse{
      * @throws IOException if file does not exist
      */
     public List<String> readFile(int day) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(STR."y2024/Input/day\{day}.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("y2024/Input/day"+day+".txt"));
         List<String> lines = new ArrayList<>();
         String line = reader.readLine();
         while (line != null) {
