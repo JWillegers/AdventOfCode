@@ -55,4 +55,12 @@ public class Day1 extends Solution {
     public int getDay() {
         return 1;
     }
+
+    public static void main(String[] args) throws IOException {
+        Day1 d = new Day1();
+        Parse p = new Parse();
+        d.getInput(d.getDay(), p);
+        System.out.println("part1: " + d.partOne());
+        System.out.println("part2: " + d.partTwo());
+    }
 }
