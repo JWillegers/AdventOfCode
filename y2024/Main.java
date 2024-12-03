@@ -9,7 +9,7 @@ public class Main {
         //grab all solutions (not necessarily complete list)
         Solution[] allSolutions;
         allSolutions = new Solution[] {
-                new Day1(), new Day2()
+                new Day1(), new Day2(), new Day3()
         };
         Parse p = new Parse();
 
