@@ -41,6 +41,23 @@ public class Parse{
     }
 
     /**
+     * Parse String "x,y,z" to List<\Integer> [x, y, z]
+     * @param in List of strings that contain integers seperated by comma's
+     * @return Nested List of Integers
+     */
+    public List<List<Integer>> toIntCommaSeparated(List<String> in) {
+        List<List<Integer>> out = new ArrayList<>();
+        for (String str : in) {
+            List<Integer> partialList = new ArrayList<>();
+            for (String s : str.split(",")) {
+                partialList.add(Integer.parseInt(s));
+            }
+            out.add(partialList);
+        }
+        return out;
+    }
+
+    /**
      * Add elements to a list until an empty line is found.
      * Then add that list to the Return list and start again.
      * This removes empty lines but keeps the data in blocks
@@ -55,7 +72,7 @@ public class Parse{
                 partialList.add(str);
             } else {
                 out.add(partialList);
-                partialList.clear();
+                partialList = new ArrayList<>();
             }
         }
         out.add(partialList);
