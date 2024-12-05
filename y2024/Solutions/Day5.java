@@ -111,14 +111,19 @@ public class Day5 extends Solution {
     public String partTwo() {
         int sum_middle_page_number = 0;
         for (List<Integer> update : incorrect_page_numbers) {
+            // the tactic is to create a new list that is ordered correctly
             List<Integer> new_order = new ArrayList<>();
             for (int page_number : update) {
+                // base case: first number to be added to new list
                 if (new_order.isEmpty()) {
                     new_order.add(page_number);
                 } else {
-                    for (int j = 0; j < new_order.size(); j++) {
+                    // loop of new order
+                    for (int index = 0; index < new_order.size(); index++) {
                         boolean add_here = true;
-                        for (int k = j; k < new_order.size(); k++) {
+                        // for all subsequent numbers
+                        for (int k = index; k < new_order.size(); k++) {
+                            // check if we can insert before those numbers
                             if (rules.get(new_order.get(k)) != null && rules.get(new_order.get(k)).contains(page_number)) {
                                 add_here = false;
                                 break;
@@ -126,9 +131,11 @@ public class Day5 extends Solution {
                         }
 
                         if (add_here) {
-                            new_order.add(j, page_number);
+                            // case: add at beginning or somewhere in the middle
+                            new_order.add(index, page_number);
                             break;
-                        } else if (j + 1 == new_order.size()) {
+                        } else if (index + 1 == new_order.size()) {
+                            // case: add at the end
                             new_order.add(page_number);
                             break;
                         }
