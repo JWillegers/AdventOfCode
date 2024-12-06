@@ -9,7 +9,7 @@ public class Main {
         //grab all solutions (not necessarily complete list)
         Solution[] allSolutions;
         allSolutions = new Solution[] {
-                new Day1(), new Day2(), new Day3(), new Day4(), new Day5()
+                new Day1(), new Day2(), new Day3(), new Day4(), new Day5(), new Day6()
         };
         Parse p = new Parse();
 
@@ -23,11 +23,13 @@ public class Main {
                 long start = System.nanoTime();
                 String result = solution.partOne();
                 double time = System.nanoTime() - start;
-                if (time >  1_000_000_000.0) {
+                if (time >  100_000_000.0) {
                     time = time / 1_000_000_000.0;
+                    time = (double) Math.round(time * 1000) / 1000;
                     System.out.println("Solution Part 1: " + result + " (took " + time + " seconds)");
                 } else {
                     time = time / 1_000_000.0;
+                    time = (double) Math.round(time * 1000) / 1000;
                     System.out.println("Solution Part 1: " + result + " (took " + time + "ms)");
                 }
 
@@ -35,11 +37,13 @@ public class Main {
                 start = System.nanoTime();
                 result = solution.partTwo();
                 time = System.nanoTime() - start;
-                if (time >  1_000_000_000.0) {
+                if (time >  100_000_000.0) {
                     time = time / 1_000_000_000.0;
+                    time = (double) Math.round(time * 1000) / 1000;
                     System.out.println("Solution Part 2: " + result + " (took " + time + " seconds)");
                 } else {
                     time = time / 1_000_000.0;
+                    time = (double) Math.round(time * 1000) / 1000;
                     System.out.println("Solution Part 2: " + result + " (took " + time + "ms)");
                 }
 
