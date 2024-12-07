@@ -40,6 +40,19 @@ public class Parse{
         return out;
     }
 
+
+    /**
+     * @param in List of Strings that contains only digits. Empty lines are not allowed
+     * @return List of Longs
+     */
+    public List<Long> toLong(List<String> in) {
+        List<Long> out = new ArrayList<>();
+        for (String str : in) {
+            out.add(Long.parseLong(str));
+        }
+        return out;
+    }
+
     /**
      * Parse String "x,y,z" to List<\Integer> [x, y, z]
      * @param in List of strings that contain integers seperated by comma's
