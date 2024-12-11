@@ -3,9 +3,7 @@ package y2024.Solutions;
 import Util_Java.Parse;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Day9 extends Solution {
     private String input;
@@ -65,13 +63,63 @@ public class Day9 extends Solution {
             }
         }
 
-        // 6362213698359 too high
         return String.valueOf(checkSum);
     }
 
     @Override
     public String partTwo() {
-        return "";
+        int indexFront = 0;
+        int indexBack = input.length() % 2 == 0 ? input.length() - 2 : input.length() - 1;
+        Set<Integer> movedIdBack = new HashSet<>();
+        long checkSum = 0;
+        int indexInternal = 0;
+
+        while (indexFront < input.length()) {
+            // process potential files
+            if (indexFront % 2 == 0) {
+                int idNumber = indexFront / 2;
+                // files have been moved back at some point, see this as free space
+                if (movedIdBack.contains(idNumber)) {
+                    indexInternal += Integer.parseInt(String.valueOf(input.charAt(indexFront)));
+                } else {
+                    // add files. update checksum
+                    for (int i = 0; i < Integer.parseInt(String.valueOf(input.charAt(indexFront))); i++) {
+                        checkSum += (long) idNumber * indexInternal;
+                        indexInternal++;
+                    }
+                }
+            } else {
+                int spacesToBeFilled = Integer.parseInt(String.valueOf(input.charAt(indexFront)));
+                // try to fill free spaces
+                while (indexFront < indexBack && spacesToBeFilled > 0) {
+                    // size file <= spacesToBeFilled
+                    if (Integer.parseInt(String.valueOf(input.charAt(indexBack))) <= spacesToBeFilled) {
+                        int idNumber = indexBack / 2;
+                        // check if we didn't already move this file
+                        if (!movedIdBack.contains(idNumber)) {
+                            for (int i = 0; i < Integer.parseInt(String.valueOf(input.charAt(indexBack))); i++) {
+                                // update checkSum
+                                checkSum += (long) idNumber * indexInternal;
+                                indexInternal++;
+                                spacesToBeFilled--;
+                                movedIdBack.add(idNumber);
+                            }
+                        }
+                    }
+                    indexBack -= 2;
+                }
+                // reset indexBack
+                indexBack = input.length() % 2 == 0 ? input.length() - 2 : input.length() - 1;
+                // make sure indexInternal is at the right place in case some spaces weren't filled
+                indexInternal += spacesToBeFilled;
+            }
+
+            // last step
+            indexFront++;
+        }
+        // 13435774190323
+        // 12988874760259 too high
+        return String.valueOf(checkSum);
     }
 
     @Override
