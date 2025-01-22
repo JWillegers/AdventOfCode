@@ -136,13 +136,17 @@ public class Parse{
     public List<List<CellState>> make2DMapCellState(List<String> in) {
         List<List<CellState>> out = new ArrayList<>();
         for (String str : in) {
-            List<CellState> partialList = new ArrayList<>();
-            for (char c : str.toCharArray()) {
-                partialList.add(char2cellstate(c));
-            }
-            out.add(partialList);
+            out.add(string2CellState(str));
         }
         return out;
+    }
+
+    public List<CellState> string2CellState(String in) {
+        List<CellState> out = new ArrayList<>();
+        for (char c : in.toCharArray()) {
+            out.add(char2cellstate(c));
+        }
+        return  out;
     }
 
     /**
@@ -157,6 +161,7 @@ public class Parse{
             case 'v', 'S' -> CellState.DOWN;
             case '<', 'W' -> CellState.LEFT;
             case '>', 'E' -> CellState.RIGHT;
+            case '@' -> CellState.ME;
             default -> CellState.OCCUPIED;
         };
     }

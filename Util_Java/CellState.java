@@ -7,5 +7,6 @@ public enum CellState {
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    ME
 }
