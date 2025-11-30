@@ -14,6 +14,8 @@ Table of the year and the language I used for that said year.
 | 2021 | Java        |
 | 2022 | Python3     |
 | 2023 | C & Python3 | 
+| 2024 | Java        |
+| 2025 | Python3     |
 
 ## Setup
 
