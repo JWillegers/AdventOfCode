@@ -18,5 +18,5 @@ def solvePart2(input: any) -> str:
 
 if __name__ == '__main__':
     input = parse()
-    print(solvePart1(deepcopy(input)))
-    print(solvePart2(input))
+    print('part1:', solvePart1(deepcopy(input)))
+    print('part2:', solvePart2(input))
