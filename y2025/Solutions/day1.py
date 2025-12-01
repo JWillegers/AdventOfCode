@@ -36,7 +36,7 @@ def solvePart2(input: any) -> str:
             elif direction == 'L':
                 new_dial = (dial - amount)
                 # offset if dial starts at 0
-                if dial == 0 and direction == 'L':
+                if dial == 0:
                     counter -= 1
                 # offset if dial ends at 0, -100, -200, ...
                 if new_dial % 100 == 0:
