@@ -10,10 +10,40 @@ def parse() -> any:
     return ret
 
 def solvePart1(input: any) -> str:
-    return "No solution found"
+    counter = 0
+    dial = 50
+    for instruction in input:
+        if len(instruction) > 0:
+            direction, amount = instruction[0], int(instruction[1:])
+            if direction == 'R':
+                dial = (dial + amount) % 100
+            elif direction == 'L':
+                dial = (dial - amount) % 100
+
+            if dial == 0:
+                counter += 1
+    return str(counter)
 
 def solvePart2(input: any) -> str:
-    return "No solution found"
+    counter = 0
+    dial = 50
+    for instruction in input:
+        if len(instruction) > 0:
+            direction, amount = instruction[0], int(instruction[1:])
+
+            if direction == 'R':
+                new_dial = (dial + amount)
+            elif direction == 'L':
+                new_dial = (dial - amount)
+                # offset if dial starts at 0
+                if dial == 0 and direction == 'L':
+                    counter -= 1
+                # offset if dial ends at 0, -100, -200, ...
+                if new_dial % 100 == 0:
+                    counter += 1
+            counter += abs(new_dial // 100)
+            dial = new_dial % 100
+    return str(counter) 
 
 if __name__ == '__main__':
     input = parse()
