@@ -1,4 +1,3 @@
-from copy import deepcopy
 import numpy as np
 
 def parse() -> any:
@@ -13,9 +12,11 @@ def parse() -> any:
             ret.append(np.array((int(s[0]), int(s[1]), int(s[2]))))
     return ret
 
-def solvePart1(input: any) -> str:
+def solve(input: any) -> tuple[str, str]:
     inf = 9*(10**10)
     matrix = np.full((len(input), len(input)), inf, dtype=float)
+    part1 = 0
+    part2 = 0
 
     for i in range(len(input)):
         for j in range(i+1, len(input)):
@@ -24,7 +25,12 @@ def solvePart1(input: any) -> str:
     circuits = []
     pairs_found = 0
 
-    while pairs_found < 1000:
+    while True:
+        if pairs_found == 1000:
+            circuits = sorted(circuits, key=len, reverse=True)
+            part1 = len(circuits[0]) * len(circuits[1]) * len(circuits[2])
+        if pairs_found > 1_000_000:
+            exit(1)
         i, j = np.where(matrix==matrix.min())
         i = i[0]
         j = j[0]
@@ -33,9 +39,11 @@ def solvePart1(input: any) -> str:
         matrix[i][j] = inf
         pairs_found += 1
 
-    circuits = sorted(circuits, key=len, reverse=True)
-    answer = len(circuits[0]) * len(circuits[1]) * len(circuits[2])
-    return str(answer)
+        if part1 > 0 and len(circuits) == 1 and len(circuits[0]) == len(matrix):
+            part2 = input[i][0] * input[j][0]
+            break
+
+    return str(part1), str(part2)
 
 def add_to_circuit(circuits: list[set], pair) -> list[set]:
     first = tuple(pair[0])
@@ -69,10 +77,8 @@ def merge_circuits(circuit: set, circuits: list[set]) -> list[set]:
 
     return new_circuits
 
-def solvePart2(input: any) -> str:
-    return "No solution found"
-
 if __name__ == '__main__':
     input = parse()
-    print('part1:', solvePart1(deepcopy(input)))
-    print('part2:', solvePart2(input))
+    p1, p2 = solve(input)
+    print('part1:', p1)
+    print('part2:', p2)
